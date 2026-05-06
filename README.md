@@ -181,14 +181,6 @@ Each audit item includes:
 ✅ **Documentation** — Full execution logs in `mitigations/`
 ✅ **Continuous monitoring** — Weekly/monthly automated scans
 
-## Migration Notes
-
-- All file paths are absolute (use `$HOME` or `~` in commands)
-- Backup location: configured per-user (e.g. `/media/$USER/Backups/latest/home/`)
-- Holding area: `~/.unused_holding/` (30-day wait)
-- Cron reminders set for holding review
-- **Combine same-day plans**: If multiple plans created same day, merge into one file (see AGENTS.md rule #8)
-
 ## Troubleshooting
 
 **Q: OpenCode doesn't respond as expected?**
