@@ -1,6 +1,3 @@
-# Sensitive system-specific data (stored locally only - visible in Obsidian)
-private/
-
 # Generated metrics (not useful for others - sanitized version kept)
 metrics/*.json
 !metrics/README.md
@@ -9,7 +6,7 @@ metrics/*.json
 .obsidian/
 !setup/.obsidian/
 
-# OpenCode local config (personal model settings — file is tracked)
+# OpenCode local dev artifacts (if they appear)
 .opencode/node_modules/
 .opencode/package.json
 .opencode/package-lock.json
