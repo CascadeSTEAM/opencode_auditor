@@ -19,7 +19,7 @@ For the menu options that open workflows (Resume, Quick Scan, Full Audit, etc.),
 - Never log secrets. If output contains tokens/keys/passwords: redact `[REDACTED]`, advise rotation
 - If `edit` fails twice on same file, use `write` (full rewrite). Never third `edit`
 - After every `write` or `edit`, use `read` to verify the change landed
-- One active audit at a time — no new `plan_*.md` while any existing one has unchecked `- [ ]` items
+- One active audit at a time — no new `audits/plan_*.md` while any existing one has unchecked `- [ ]` items
 
 ## Self-Critique Enforcement
 
@@ -33,7 +33,7 @@ Before presenting ANY proposal, plan, or recommendation:
 
 ## Plan Creation
 
-- Filename: `plan_YYYYMMDD.md`
+- Filename: `audits/plan_YYYYMMDD.md`
 - Default premise: *"Find security issues on this local Linux system. Prioritize by: exploitability first, then impact, then remediation effort."*
 - Every finding: Risk ID (`AUDIT-YYYY-NNN`), Likelihood, Impact, Risk Level, SOC2 Control, Compliance Status
 - Create `mitigations/NN_topic.md` for each finding at the same time
@@ -44,7 +44,7 @@ Before presenting ANY proposal, plan, or recommendation:
 | File | Content |
 |---|---|
 | `docs/startup-menu.md` | Menu definitions for /audit |
-| `docs/resolution-workflow.md` | Mitigate/Accept/Transfer/Skip flows |
+| `docs/resolution-workflow.md` | Mitigate/Accept/Transfer/Defer/Skip flows |
 | `docs/completion-workflow.md` | Archive flow after all items resolved |
 | `docs/soc2-controls.md` | SOC2 control code table |
 | `docs/file-conventions.md` | File path purposes, tracking policy |

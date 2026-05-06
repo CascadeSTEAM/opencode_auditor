@@ -1,8 +1,8 @@
 # Templates Skill — Audit Vault Document Formats
 
-Load this skill when creating or updating audit plan files (`plan_*.md`) or mitigation task files (`mitigations/NN_topic.md`).
+Load this skill when creating or updating audit plan files (`audits/plan_*.md`) or mitigation task files (`mitigations/NN_topic.md`).
 
-## Plan File Template (`plan_YYYYMMDD.md`)
+## Plan File Template (`audits/plan_YYYYMMDD.md`)
 
 ```markdown
 # Audit Plan — YYYY-MM-DD
@@ -65,7 +65,7 @@ Load this skill when creating or updating audit plan files (`plan_*.md`) or miti
 - [ ] Verify action 2 succeeded
 
 ## Resolution
-- **Status:** Mitigated | Accepted | Transferred
+- **Status:** Mitigated | Accepted | Transferred | Deferred | Skipped
 - **Date:** YYYY-MM-DD
 - **Notes:** ...
 ```

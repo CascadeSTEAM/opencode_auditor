@@ -11,7 +11,7 @@ MISSING=false
 # --- 1. Vault structure ---
 echo "=== VAULT HEALTH ==="
 ALL_OK=true
-for d in mitigations completed_audits metrics; do
+for d in mitigations audits/completed audits metrics; do
   if [[ -d "$VAULT_DIR/$d" ]]; then
     echo "dir_$d: ok"
   else
@@ -22,7 +22,7 @@ for d in mitigations completed_audits metrics; do
 done
 
 # --- 2. Active audit scan ---
-ACTIVE_PLAN=$(grep -rls "- \[ \]" "$VAULT_DIR"/plan_*.md 2>/dev/null | sort -r | head -1 || true)
+ACTIVE_PLAN=$(grep -rls "- \[ \]" "$VAULT_DIR"/audits/plan_*.md 2>/dev/null | sort -r | head -1 || true)
 if [[ -n "$ACTIVE_PLAN" ]]; then
   echo "active_plan: $(basename "$ACTIVE_PLAN")"
   TOTAL=$(grep -c -- "- \[ \]" "$ACTIVE_PLAN" 2>/dev/null || echo 0)
@@ -59,7 +59,7 @@ fi
 # --- Exit ---
 if [[ "$MISSING" == true ]]; then
   echo "=== RESULT: MISSING FILES ==="
-  echo "Run 'mkdir -p mitigations completed_audits metrics' to fix."
+  echo "Run 'mkdir -p audits/completed mitigations metrics' to fix."
   exit 1
 fi
 

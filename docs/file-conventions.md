@@ -6,10 +6,10 @@ Core vault code is tracked in git. Audit output (plans, mitigations, metrics) is
 
 | Path | Git | Purpose |
 |------|-----|---------|
-| `plan_YYYYMMDD.md` | Ignored | Active audit — one at a time |
-| `plan_proposal_YYYYMMDD_name.md` | Ignored | Draft not yet active |
+| `audits/plan_YYYYMMDD.md` | Ignored | Active audit — one at a time |
+| `audits/plan_proposal_YYYYMMDD_name.md` | Ignored | Draft not yet active |
 | `mitigations/NN_topic.md` | Ignored | Per-item execution log |
-| `completed_audits/` | Tracked | Archived finished audits |
+| `audits/completed/` | Ignored | Archived finished audits |
 | `metrics/security_posture_YYYYMM.json` | Ignored | Monthly scan metrics |
 | `docs/` | Tracked | Workflow reference files |
 | `mitigations/.gitkeep` | Tracked | Directory placeholder (dir created by install.sh) |

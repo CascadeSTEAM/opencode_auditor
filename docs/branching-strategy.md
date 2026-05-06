@@ -66,7 +66,7 @@ See `VERSIONING.md` for bump rules.
 
 | **Not tracked** (local only) | No PR needed |
 |-----------------------------|--------------|
-| `plan_*.md` | — |
+| `audits/plan_*.md` | — |
 | `mitigations/*.md` | — |
 | `metrics/*.json` | — |
 | `.startup-required` | — |

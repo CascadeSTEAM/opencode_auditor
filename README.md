@@ -62,13 +62,13 @@ opencode -p "Scan ~ for exposed AWS keys, .env files, and secrets in git history
 opencode -p "Run lynis quick audit and rkhunter, show me the results"
 
 # View security posture trend
-opencode -p "Show me the metrics from completed_audits/ and metrics/"
+opencode -p "Show me the metrics from audits/completed/ and metrics/"
 
 # Remediate a specific finding
 opencode -p "Walk me through mitigating the SSH root login finding"
 ```
 
-Each session produces a dated plan file (`plan_YYYYMMDD.md`) with per-finding risk assessments mapped to SOC2 controls. Issues are resolved through interactive conversation: Mitigate, Accept, or Transfer, with safety audits before destructive actions and verification after.
+Each session produces a dated plan file (`audits/plan_YYYYMMDD.md`) with per-finding risk assessments mapped to SOC2 controls. Issues are resolved through interactive conversation: Mitigate, Accept, Transfer, Defer, or Skip, with discussion mode always available to ask questions before deciding.
 
 ## Directory Structure
 
@@ -88,7 +88,8 @@ Audit/
 ├── opencode.json          # Vault-local OpenCode config
 ├── startup.sh             # Startup health check
 ├── bootstrap.sh           # Single-command install script
-├── plan_YYYYMMDD.md       # Active audit (one at a time)
+├── audits/                # Active and completed audit plans
+│   └── completed/          # Archived finished audits
 ├── mitigations/           # Individual task files (NN_topic.md)
 ├── completed_audits/      # Finished audits (archived)
 │   ├── plan_20260505.md
@@ -157,6 +158,9 @@ When a finding is identified, you can:
 - **Mitigate** — Walk through a structured plan with safety audit, action, and verification phases
 - **Accept** — Document why the risk is acceptable (no action needed)
 - **Transfer** — Assign to another person or system
+- **Defer** — Skip for now, keep tracking — revisit on next session
+- **Skip** — Mark as skipped with a reason
+- **Discuss** — Type your own response at any prompt to ask questions and understand the finding before deciding
 
 ## Security Tools Integration
 
@@ -201,14 +205,14 @@ Each audit item includes:
 - AGENTS.md has Process Fix: Use `write` tool after 2 failures
 
 **Q: How to start over?**
-- Move `plan_*.md` files to `completed_audits/`:
+- Move `audits/plan_*.md` files to `audits/completed/`:
   ```bash
-  mv plan_*.md completed_audits/
+  mv audits/plan_*.md audits/completed/
   ```
 - Restart OpenCode — it will pick up AGENTS.md automatically
 
 **Q: Where are completed audits?**
-- Archived in `completed_audits/` directory
+- Archived in `audits/completed/` directory
 
 **Q: Setup script fails?**
 - Ensure `jq` is installed: `sudo pacman -S jq` (Arch) or `sudo apt install jq` (Ubuntu)

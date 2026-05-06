@@ -22,8 +22,7 @@ setup/install.sh.bak*
 .vault-version
 
 # Plan files (active audit output — local only, not tracked)
-plan_*.md
-plan_proposal_*.md
+audits/
 
 # Mitigation files (scan remediation output — local only; keep dir placeholder)
 mitigations/*
