@@ -15,16 +15,18 @@ This vault provides a **menu-driven security audit framework** for Linux laptops
 ## Quick Install
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/growlf/opencode_audito/main/bootstrap.sh | bash
+curl -fsSL https://raw.githubusercontent.com/growlf/opencode_audito/v0.6.0/bootstrap.sh | bash
 ```
 
 This clones the vault to `~/Audit`, runs all setup (permissions, skills, Obsidian config), and optionally installs security tools.
 
-**Review before running:** `curl -fsSL https://raw.githubusercontent.com/growlf/opencode_audito/main/bootstrap.sh -o bootstrap.sh && less bootstrap.sh && bash bootstrap.sh`
+**Review before running:** `curl -fsSL .../v0.6.0/bootstrap.sh -o bootstrap.sh && less bootstrap.sh && bash bootstrap.sh`
 
-**Custom install directory:** `INSTALL_DIR=/path/to/vault bash <(curl -fsSL https://raw.githubusercontent.com/growlf/opencode_audito/main/bootstrap.sh)`
+**Custom install directory:** `INSTALL_DIR=/path/to/vault bash <(curl -fsSL .../v0.6.0/bootstrap.sh)`
 
 **Non-interactive:** `YES=1 bash <(curl -fsSL ...)`
+
+**Pin to a specific version:** Replace `v0.6.0` with any tag. See `VERSIONING.md` for the versioning scheme. Use `main` for the bleeding-edge development branch (not recommended for stable installs).
 
 After install: `cd ~/Audit && opencode`
 

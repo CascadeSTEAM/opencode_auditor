@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 # Audit Vault — single-command install from github.com/growlf/opencode_audito
 # Usage:
-#   curl -fsSL https://raw.githubusercontent.com/growlf/opencode_audito/main/bootstrap.sh | bash
-#   curl -fsSL https://raw.githubusercontent.com/growlf/opencode_audito/main/bootstrap.sh | bash -s -- --dry-run
+#   curl -fsSL https://raw.githubusercontent.com/growlf/opencode_audito/v0.6.0/bootstrap.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/growlf/opencode_audito/v0.6.0/bootstrap.sh | bash -s -- --dry-run
 #   INSTALL_DIR=/custom/path bash <(curl -fsSL ...)
+#   (Replace v0.6.0 with the latest tag; use main for development)
 
 set -euo pipefail
 
