@@ -18,14 +18,14 @@ This vault provides a **conversational security audit framework** for Linux lapt
 ## Quick Install
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/CascadeSTEAM/opencode_auditor/v0.7.6/bootstrap.sh | bash
+curl -fsSL https://raw.githubusercontent.com/CascadeSTEAM/opencode_auditor/v0.7.7/bootstrap.sh | bash
 ```
 
 This clones the vault to `~/Audit`, runs all setup (permissions, skills, Obsidian config), and optionally installs security tools.
 
 **Review before running:** Download and inspect first:
 ```bash
-curl -fsSL https://raw.githubusercontent.com/CascadeSTEAM/opencode_auditor/v0.7.6/bootstrap.sh -o bootstrap.sh
+curl -fsSL https://raw.githubusercontent.com/CascadeSTEAM/opencode_auditor/v0.7.7/bootstrap.sh -o bootstrap.sh
 less bootstrap.sh
 bash bootstrap.sh
 ```
@@ -34,7 +34,7 @@ bash bootstrap.sh
 
 **Non-interactive:** `YES=1 bash bootstrap.sh`
 
-**Pin to a specific version:** Replace `v0.7.6` with any tag. See `docs/VERSIONING.md` for the versioning scheme. Use `main` for the development branch.
+**Pin to a specific version:** Replace `v0.7.7` with any tag. See `docs/VERSIONING.md` for the versioning scheme. Use `main` for the development branch.
 
 After install: `cd ~/Audit && opencode`
 
