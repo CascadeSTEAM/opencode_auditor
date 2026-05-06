@@ -51,6 +51,12 @@ for tool in lynis rkhunter jq; do
   fi
 done
 
+if systemctl is-active --quiet auditd 2>/dev/null; then
+  echo "tool_auditd: active"
+else
+  echo "tool_auditd: inactive"
+fi
+
 # --- 5. Vault startup marker ---
 echo "=== MARKER ==="
 if [[ -f "$VAULT_DIR/.startup-required" ]]; then
