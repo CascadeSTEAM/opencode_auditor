@@ -14,14 +14,18 @@ feature/fix branch → PR into master → squash-merge → tag release
 ### 1. Create a Branch
 
 ```bash
-git checkout -b T/topic-description
+git checkout -b PREFIX/issue-number-kebab-topic
 ```
 
 | Prefix | Purpose | Example |
 |--------|---------|---------|
 | `F/` | Feature | `F/csv-export` |
-| `FIX/` | Bug fix | `FIX/startup-exit-code` |
+| `FIX/` | Bug fix on tracked core code | `FIX/42-startup-flags` |
 | `DOC/` | Documentation | `DOC/api-ref-update` |
+
+For `FIX/` branches, the issue number is the GitHub issue that describes the bug. Create the issue first via `gh issue create`, then create the branch referencing it.
+
+See the **Core Code Bug Workflow** in `AGENTS.md` for the full flow: scope check → create issue → create branch → fix → PR.
 
 ### 2. Commit on the Branch
 

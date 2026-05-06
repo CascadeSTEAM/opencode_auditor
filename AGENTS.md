@@ -19,7 +19,7 @@ For the menu options that open workflows (Resume, Quick Scan, Full Audit, etc.),
 - Never log secrets. If output contains tokens/keys/passwords: redact `[REDACTED]`, advise rotation
 - If `edit` fails twice on same file, use `write` (full rewrite). Never third `edit`
 - After every `write` or `edit`, use `read` to verify the change landed
-- One active audit at a time — no new `plan_*.md` while any existing one has unchecked `- [ ]` items
+- One active audit at a time — no new `audits/plan_*.md` while any existing one has unchecked `- [ ]` items
 
 ## Self-Critique Enforcement
 
@@ -33,11 +33,23 @@ Before presenting ANY proposal, plan, or recommendation:
 
 ## Plan Creation
 
-- Filename: `plan_YYYYMMDD.md`
+- Filename: `audits/plan_YYYYMMDD.md`
 - Default premise: *"Find security issues on this local Linux system. Prioritize by: exploitability first, then impact, then remediation effort."*
 - Every finding: Risk ID (`AUDIT-YYYY-NNN`), Likelihood, Impact, Risk Level, SOC2 Control, Compliance Status
 - Create `mitigations/NN_topic.md` for each finding at the same time
 - See `setup/skills/templates/SKILL.md` for plan/mitigation format templates
+
+## Core Code Bug Workflow
+
+When a bug or security issue is discovered in **core vault code** (tracked files not in `.gitignore` — e.g. bootstrap.sh, setup/, docs/, AGENTS.md, opencode.json, startup.sh):
+
+1. **Scope check** — Is this a system security finding (auditd, ports, SSH, .env, etc.)? If yes, log locally only. If it affects a tracked core file, proceed.
+2. **Create GitHub issue** — Run `gh issue create --title "BUG: short description" --body "What, where, impact"` to track it in the upstream repo.
+3. **Create connected branch** — `git checkout -b FIX/<issue-number>-<kebab-topic>` from master.
+4. **Implement fix** — On the FIX/ branch, commit the fix with present-tense messages.
+5. **Open PR** — Push the branch, open a PR referencing the issue. The issue auto-closes on merge.
+
+> System security scan findings (auditd, ports, .env exposure, etc.) never generate GitHub issues. They are logged in `audits/plan_*.md` and remain local-only per existing policy. See `docs/branching-strategy.md` for branch naming rules.
 
 ## Docs Reference
 
