@@ -5,20 +5,19 @@ private/
 metrics/*.json
 !metrics/README.md
 
-# Obsidian config (personal)
+# Obsidian config (personal — root only, setup/ref templates are tracked)
 .obsidian/
+!setup/.obsidian/
 
 # OpenCode local config (personal model settings — file is tracked)
 .opencode/node_modules/
 .opencode/package.json
 .opencode/package-lock.json
 
-# Temp files
+# Temp and backup files
 *.bak
 *~
 *.tmp
-
-# Setup files (already in repo, but just in case)
 setup/INSTALL.md.bak*
 setup/install.sh.bak*
 
