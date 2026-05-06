@@ -76,10 +76,10 @@ Scan output and remediation files live outside git — they are immune to check-
 ## Pre-1.0 Convention
 
 - `master` is the active development branch
-- No direct commits to `master` (branch + PR only)
+- No direct commits to `main` (branch + PR only)
 - Tags use `v0.MINOR.PATCH` until v1.0
 - v1.0 is tagged when the release criteria in `VERSIONING.md` are met
 
 ## Automatic Enforcement
 
-The agent (per `AGENTS.md` Hard Rules) checks the branch before every core-file edit. If on `master`, it branches first. This applies automatically to all tracked files — gitignored content (plans, mitigations, metrics) is exempt and can be modified on any branch.
+The agent (per `AGENTS.md` Hard Rules) checks the branch before every core-file edit. If on `main`, it branches first. This applies automatically to all tracked files — gitignored content (plans, mitigations, metrics) is exempt and can be modified on any branch.

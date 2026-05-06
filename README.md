@@ -91,10 +91,6 @@ Audit/
 ├── audits/                # Active and completed audit plans
 │   └── completed/          # Archived finished audits
 ├── mitigations/           # Individual task files (NN_topic.md)
-├── completed_audits/      # Finished audits (archived)
-│   ├── plan_20260505.md
-│   ├── plan_20260506.md
-│   └── plan_20260506_2.md
 ├── metrics/               # Security posture trends
 │   └── README.md
 └── docs/                  # Workflow reference files

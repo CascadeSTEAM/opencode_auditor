@@ -20,7 +20,7 @@ For the menu options that open workflows (Resume, Quick Scan, Full Audit, etc.),
 - If `edit` fails twice on same file, use `write` (full rewrite). Never third `edit`
 - After every `write` or `edit`, use `read` to verify the change landed
 - One active audit at a time — no new `audits/plan_*.md` while any existing one has unchecked `- [ ]` items
-- **Automatic branching:** Before modifying any tracked file (anything not in `.gitignore`), check current branch. If on `master`, create a feature/fix/doc branch first (`F/`, `FIX/`, or `DOC/` prefix). See `docs/branching-strategy.md` for conventions. If only touching gitignored/local-only files (plans, mitigations, metrics), no branch needed.
+- **Automatic branching:** Before modifying any tracked file (anything not in `.gitignore`), check current branch. If on `main`, create a feature/fix/doc branch first (`F/`, `FIX/`, or `DOC/` prefix). See `docs/branching-strategy.md` for conventions. If only touching gitignored/local-only files (plans, mitigations, metrics), no branch needed.
 
 ## Self-Critique Enforcement
 
