@@ -8,7 +8,7 @@
 | `completed_audits/` | Archived finished audits |
 | `metrics/security_posture_YYYYMM.json` | Monthly scan metrics |
 | `docs/` | Workflow reference files |
-| `.vault-version` | Created on first run; absence triggers install flow |
+| `mitigations/` | Created by install.sh; its existence marks install complete |
 | `.startup-required` | Marker — deleted after /audit menu is shown |
 
 **Same-day merge:** If a second plan is created on the same date, append its items to the existing plan (continuing the item numbering), copy mitigations, update Summary. Keep the original filename.

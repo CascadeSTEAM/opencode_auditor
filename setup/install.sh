@@ -154,16 +154,13 @@ done
 echo ""
 echo "Creating vault scaffold in $VAULT_DIR ..."
 
-# Create directory structure
+# Create directory structure (mitigations/ existence = install-complete marker)
 mkdir -p "$VAULT_DIR/mitigations" "$VAULT_DIR/completed_audits" "$VAULT_DIR/metrics"
 mkdir -p "$VAULT_DIR/docs"
 mkdir -p "$VAULT_DIR/.obsidian/plugins"
 
-# Create .vault-version
-printf "version=4.0\nsetup_date=%s\nsetup_complete=true\n" "$(date -I)" > "$VAULT_DIR/.vault-version"
 echo "✓ mitigations/ completed_audits/ metrics/ created"
 echo "✓ docs/ created"
-echo "✓ .vault-version written"
 
 # Copy startup.sh and make executable
 if [[ -f "$VAULT_DIR/startup.sh" ]]; then

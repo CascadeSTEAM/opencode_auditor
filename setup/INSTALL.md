@@ -1,6 +1,6 @@
 # INSTALL.md — Audit Vault First-Run Setup
 
-This file is for **humans and the agent on first run only**. After setup is complete, `.vault-version` exists and this file is ignored by the agent.
+This file is for **humans and the agent on first run only**. After setup is complete, `mitigations/` exists and this file is ignored by the agent.
 
 > **About `opencode.json` in the vault root**
 > The vault ships with an `opencode.json` at its root. This works fine — it does NOT break access to the free Big Pickle model via OpenCode Zen, as long as `"model": "opencode/big-pickle"` and the `opencode` provider are set. Instructions use a relative path (`"AGENTS.md"`) so the config travels with the vault across machines. Permissions and skills are installed into your global config by `install.sh`.
@@ -149,7 +149,7 @@ OpenCode reads `AGENTS.md` automatically. On first message it runs the startup s
 
 The install script already scaffolds `.obsidian/` config and downloads the opencode-obsidian plugin. Just open Obsidian, select **"Open folder as vault"**, and pick this directory.
 
-> `install.sh` already created `.vault-version`, `mitigations/`, `completed_audits/`, and `metrics/` — nothing else needed.
+> `install.sh` already created `mitigations/`, `completed_audits/`, and `metrics/` — nothing else needed.
 
 ---
 
@@ -165,7 +165,6 @@ The install script already scaffolds `.obsidian/` config and downloads the openc
         └── SKILL.md
 
 your-vault/
-├── .vault-version         ← written by install.sh
 ├── AGENTS.md
 ├── opencode.json          ← vault-local config (relative paths, travels with vault)
 ├── INSTALL.md
@@ -187,8 +186,8 @@ your-vault/
 ## Transferring to a New System
 
 1. Copy or clone the vault directory (`AGENTS.md`, `INSTALL.md`, `install.sh`, `opencode.fragment.json`, `setup/skills/`, and your audit history)
-2. Delete `.vault-version` to trigger first-run again
-3. Run Steps 1–5 on the new system
+2. Run `bash setup/install.sh` on the new system
+3. Launch OpenCode
 4. Launch OpenCode
 
 Your audit history travels with the vault. The only thing installed outside it is the merged global config entry and the skills in `~/.config/opencode/` — `install.sh` handles both.

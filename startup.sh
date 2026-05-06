@@ -8,17 +8,8 @@ set -euo pipefail
 VAULT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 MISSING=false
 
-# --- 1. Vault version ---
+# --- 1. Vault structure ---
 echo "=== VAULT HEALTH ==="
-
-if [[ -f "$VAULT_DIR/.vault-version" ]]; then
-  echo "vault_version: $(head -1 "$VAULT_DIR/.vault-version")"
-else
-  echo "vault_version: MISSING"
-  MISSING=true
-fi
-
-# --- 2. Required directories ---
 ALL_OK=true
 for d in mitigations completed_audits metrics; do
   if [[ -d "$VAULT_DIR/$d" ]]; then
@@ -30,7 +21,7 @@ for d in mitigations completed_audits metrics; do
   fi
 done
 
-# --- 3. Active audit scan ---
+# --- 2. Active audit scan ---
 ACTIVE_PLAN=$(grep -rls "- \[ \]" "$VAULT_DIR"/plan_*.md 2>/dev/null | sort -r | head -1 || true)
 if [[ -n "$ACTIVE_PLAN" ]]; then
   echo "active_plan: $(basename "$ACTIVE_PLAN")"
@@ -41,7 +32,7 @@ else
   echo "open_items: 0"
 fi
 
-# --- 4. Security tools ---
+# --- 3. Security tools ---
 echo "=== TOOLS CHECK ==="
 for tool in lynis rkhunter jq; do
   if command -v "$tool" &>/dev/null; then
@@ -57,7 +48,7 @@ else
   echo "tool_auditd: inactive"
 fi
 
-# --- 5. Vault startup marker ---
+# --- 4. Vault startup marker ---
 echo "=== MARKER ==="
 if [[ -f "$VAULT_DIR/.startup-required" ]]; then
   echo "startup_required: yes"

@@ -18,5 +18,8 @@ metrics/*.json
 setup/INSTALL.md.bak*
 setup/install.sh.bak*
 
+# Vault version marker (legacy — replaced by mitigations/ existence check)
+.vault-version
+
 # Build artifacts
 node_modules/
