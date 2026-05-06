@@ -45,7 +45,7 @@ Before presenting ANY proposal, plan, or recommendation:
 When a bug or security issue is discovered in **core vault code** (tracked files not in `.gitignore` — e.g. bootstrap.sh, setup/, docs/, AGENTS.md, opencode.json, startup.sh):
 
 1. **Scope check** — Is this a system security finding (auditd, ports, SSH, .env, etc.)? If yes, log locally only. If it affects a tracked core file, proceed.
-2. **Create GitHub issue** — Run `gh issue create --title "BUG: short description" --body "What, where, impact"` to track it in the upstream repo.
+2. **Create GitHub issue** — Run `gh issue create --title "FIX: short description" --body "What, where, impact"` to track it in the upstream repo.
 3. **Create connected branch** — `git checkout -b FIX/<issue-number>-<kebab-topic>` from main.
 4. **Implement fix** — On the FIX/ branch, commit the fix with present-tense messages.
 5. **Open PR** — Push the branch, open a PR referencing the issue. The issue auto-closes on merge.
@@ -62,4 +62,5 @@ When a bug or security issue is discovered in **core vault code** (tracked files
 | `docs/soc2-controls.md` | SOC2 control code table |
 | `docs/file-conventions.md` | File path purposes, tracking policy |
 | `docs/continuous-monitoring.md` | Weekly/monthly monitoring schedule |
+| `docs/branching-strategy.md` | PR workflow and branch naming for core code |
 | `docs/branching-strategy.md` | PR workflow and branch naming for core code |
