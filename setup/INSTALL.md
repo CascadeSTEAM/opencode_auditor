@@ -21,34 +21,59 @@ OpenCode is **not** an Obsidian plugin. It runs in your terminal, desktop app, o
 
 ---
 
-## Step 1 — Install OpenCode
+## Quick Install (Recommended)
 
 ```bash
-# Arch Linux (recommended for you)
-sudo pacman -S opencode          # stable
-paru -S opencode-bin             # latest AUR
+curl -fsSL https://raw.githubusercontent.com/growlf/opencode_audito/main/bootstrap.sh | bash
+```
 
-# Or via Homebrew (macOS/Linux)
+This single command clones the repo, runs `install.sh`, and optionally installs security tools.
+
+**Review before running:**
+```bash
+curl -fsSL https://raw.githubusercontent.com/growlf/opencode_audito/main/bootstrap.sh -o bootstrap.sh
+less bootstrap.sh
+bash bootstrap.sh
+```
+
+**With install path:**
+```bash
+INSTALL_DIR=/path/to/vault bash <(curl -fsSL https://raw.githubusercontent.com/growlf/opencode_audito/main/bootstrap.sh)
+```
+
+---
+
+## Manual Install Steps
+
+### Step 1 — Clone the vault
+
+```bash
+git clone https://github.com/growlf/opencode_audito.git ~/Audit
+cd ~/Audit
+```
+
+### Step 2 — Install OpenCode
+
+```bash
+# Arch Linux
+sudo pacman -S opencode
+
+# Homebrew (macOS/Linux)
 brew install anomalyco/tap/opencode
 
-# Or npm/bun/pnpm
+# npm
 npm i -g opencode-ai@latest
 
-# Or direct install script
+# Direct install script
 curl -fsSL https://opencode.ai/install | bash
 ```
 
 Verify: `opencode --version`
 
----
-
-## Step 2 — Merge permissions into your global OpenCode config
-
-This vault ships with an `opencode.fragment.json` fragment. The install script below merges it into `~/.config/opencode/opencode.json` without clobbering your existing settings (API keys, model preferences, etc.).
+### Step 3 — Merge permissions into your global OpenCode config
 
 ```bash
-# Run from the vault directory
-bash install.sh
+bash setup/install.sh
 ```
 
 What `install.sh` does:
@@ -72,9 +97,7 @@ jq 'del(.permission)' ~/.config/opencode/opencode.json > /tmp/oc.json \
   && mv /tmp/oc.json ~/.config/opencode/opencode.json
 ```
 
----
-
-## Step 3 — Install recommended security tools
+### Step 4 — Install recommended security tools
 
 ```bash
 # Detect OS

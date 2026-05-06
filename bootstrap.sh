@@ -1,0 +1,146 @@
+#!/usr/bin/env bash
+# Audit Vault — single-command install from github.com/growlf/opencode_audito
+# Usage:
+#   curl -fsSL https://raw.githubusercontent.com/growlf/opencode_audito/main/bootstrap.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/growlf/opencode_audito/main/bootstrap.sh | bash -s -- --dry-run
+#   INSTALL_DIR=/custom/path bash <(curl -fsSL ...)
+
+set -euo pipefail
+
+REPO="growlf/opencode_audito"
+BRANCH="main"
+INSTALL_DIR="${INSTALL_DIR:-$HOME/Audit}"
+GITHUB_RAW="https://raw.githubusercontent.com/$REPO/$BRANCH"
+
+# --- Flags ---
+DRY_RUN=false
+for arg in "$@"; do
+  case "$arg" in
+    --dry-run) DRY_RUN=true ;;
+    --help) echo "Usage: curl -fsSL $GITHUB_RAW/bootstrap.sh | bash"; exit 0 ;;
+  esac
+done
+
+# --- Colors ---
+GREEN='\033[0;32m'; YELLOW='\033[1;33m'; RED='\033[0;31m'; NC='\033[0m'
+info()  { echo -e "${GREEN}✓${NC} $1"; }
+warn()  { echo -e "${YELLOW}⚠${NC} $1"; }
+fail()  { echo -e "${RED}✗${NC} $1"; }
+
+# --- Prerequisite check ---
+echo "=== Audit Vault — Preflight ==="
+echo ""
+
+MISSING_DEPS=false
+for dep in git jq; do
+  if command -v "$dep" &>/dev/null; then
+    info "$dep found"
+  else
+    fail "$dep is required"
+    MISSING_DEPS=true
+  fi
+done
+
+if $MISSING_DEPS; then
+  echo ""
+  echo "Install missing dependencies:"
+  echo "  Ubuntu/Debian: sudo apt install git jq"
+  echo "  Fedora:        sudo dnf install git jq"
+  echo "  Arch:          sudo pacman -S git jq"
+  echo "  macOS:         brew install git jq"
+  exit 1
+fi
+
+if ! command -v opencode &>/dev/null; then
+  echo ""
+  warn "OpenCode not found — needed to run audits."
+  echo "  Install: curl -fsSL https://opencode.ai/install | bash"
+  echo "  Or:      npm i -g opencode-ai@latest"
+  echo "  Or:      brew install anomalyco/tap/opencode"
+  echo ""
+
+  if [[ "${YES:-}" != "1" ]] && [[ "$DRY_RUN" != true ]]; then
+    read -rp "Install OpenCode now? [Y/n] " REPLY
+    if [[ -z "$REPLY" || "$REPLY" =~ ^[Yy] ]]; then
+      curl -fsSL https://opencode.ai/install | bash
+      info "OpenCode installed"
+    else
+      warn "Skipping OpenCode install. You'll need it later."
+    fi
+  fi
+  echo ""
+fi
+
+# --- Clone or pull ---
+echo "=== Audit Vault — Install ==="
+echo ""
+
+if [[ -d "$INSTALL_DIR" ]]; then
+  if [[ -d "$INSTALL_DIR/.git" ]]; then
+    info "Vault exists at $INSTALL_DIR — pulling latest"
+    if $DRY_RUN; then
+      echo "  Would run: git -C $INSTALL_DIR pull origin $BRANCH"
+    else
+      git -C "$INSTALL_DIR" pull origin "$BRANCH"
+    fi
+  else
+    fail "$INSTALL_DIR exists but is not a git repo."
+    echo "  Remove it or set INSTALL_DIR to a different path, then re-run."
+    exit 1
+  fi
+else
+  info "Cloning vault to $INSTALL_DIR"
+  if $DRY_RUN; then
+    echo "  Would run: git clone --branch $BRANCH https://github.com/$REPO.git $INSTALL_DIR"
+  else
+    git clone --branch "$BRANCH" "https://github.com/$REPO.git" "$INSTALL_DIR"
+  fi
+fi
+
+# --- Run vault installer ---
+echo ""
+if $DRY_RUN; then
+  echo "  Would run: bash $INSTALL_DIR/setup/install.sh"
+else
+  echo "Running vault installer..."
+  bash "$INSTALL_DIR/setup/install.sh"
+fi
+
+# --- Optional: security tools ---
+if command -v apt &>/dev/null; then
+  echo ""
+  if [[ "${YES:-}" == "1" ]]; then
+    INSTALL_TOOLS=true
+  elif [[ "$DRY_RUN" != true ]]; then
+    read -rp "Install recommended security tools (lynis, rkhunter, fail2ban)? [Y/n] " REPLY
+    INSTALL_TOOLS=true
+    if [[ -n "$REPLY" && ! "$REPLY" =~ ^[Yy] ]]; then
+      INSTALL_TOOLS=false
+    fi
+  fi
+
+  if [[ "${INSTALL_TOOLS:-false}" == true ]]; then
+    echo "Installing security tools..."
+    sudo apt update && sudo apt install -y lynis rkhunter fail2ban
+    info "Security tools installed"
+  else
+    warn "Skipping security tools. Install later: sudo apt install lynis rkhunter fail2ban"
+  fi
+else
+  echo ""
+  warn "Unrecognized package manager. Install tools manually for your distro."
+fi
+
+# --- Done ---
+echo ""
+echo "========================================"
+echo "  Audit Vault install complete!"
+echo "========================================"
+echo ""
+echo "  Next steps:"
+echo "    cd $INSTALL_DIR"
+echo "    opencode"
+echo ""
+echo "  Or open in Obsidian as a vault folder."
+echo "  See $INSTALL_DIR/README.md for full docs."
+echo ""

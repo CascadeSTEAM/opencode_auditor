@@ -12,24 +12,42 @@ This vault provides a **menu-driven security audit framework** for Linux laptops
 - Remediation tracking with verification and resolution menus
 - 30-day holding period for safe deletions
 
-## Quick Start
+## Quick Install
 
-### First Time Setup
+```bash
+curl -fsSL https://raw.githubusercontent.com/growlf/opencode_audito/main/bootstrap.sh | bash
+```
 
-1. **Run the setup script** (installs OpenCode if missing, merges permissions to global config):
-   ```bash
-   cd /path/to/your/audit-vault
-   bash setup/install.sh
-   ```
-   - Automatically checks for OpenCode and installs via `curl -fsSL https://opencode.ai/install | bash` if missing
-   - Merges permissions (`bash`, `edit`, `write` = "ask") to `~/.config/opencode/opencode.json`
-   - Copies skills to `~/.config/opencode/skills/`
+This clones the vault to `~/Audit`, runs all setup (permissions, skills, Obsidian config), and optionally installs security tools.
+
+**Review before running:** `curl -fsSL https://raw.githubusercontent.com/growlf/opencode_audito/main/bootstrap.sh -o bootstrap.sh && less bootstrap.sh && bash bootstrap.sh`
+
+**Custom install directory:** `INSTALL_DIR=/path/to/vault bash <(curl -fsSL https://raw.githubusercontent.com/growlf/opencode_audito/main/bootstrap.sh)`
+
+**Non-interactive:** `YES=1 bash <(curl -fsSL ...)`
+
+After install: `cd ~/Audit && opencode`
+
+### First Time Setup (Manual)
+
+If you prefer to install manually:
+
+1. **Clone the repo**:
+    ```bash
+    git clone https://github.com/growlf/opencode_audito.git ~/Audit
+    ```
+
+2. **Run the setup script** (merges permissions to global config):
+    ```bash
+    cd ~/Audit
+    bash setup/install.sh
+    ```
 
 3. **Launch OpenCode** (terminal-based AI agent):
-   ```bash
-   cd /path/to/your/audit-vault
-   opencode
-   ```
+    ```bash
+    cd ~/Audit
+    opencode
+    ```
 
 4. **Or open in Obsidian** (the install script scaffolds `.obsidian/` config and installs the opencode-obsidian plugin). Open Obsidian, choose **"Open folder as vault"**, and select this directory.
 
