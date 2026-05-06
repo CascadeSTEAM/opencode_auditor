@@ -21,7 +21,7 @@ This vault provides a **conversational security audit framework** for Linux lapt
 curl -fsSL https://raw.githubusercontent.com/CascadeSTEAM/opencode_auditor/v0.7.7/bootstrap.sh | bash
 ```
 
-This clones the vault to `~/Audit`, runs all setup (permissions, skills, Obsidian config), and optionally installs security tools.
+This clones the vault to `~/Projects/audit`, runs all setup (permissions, skills, Obsidian config), and optionally installs security tools.
 
 **Review before running:** Download and inspect first:
 ```bash
@@ -36,13 +36,13 @@ bash bootstrap.sh
 
 **Pin to a specific version:** Replace `v0.7.7` with any tag. See `docs/VERSIONING.md` for the versioning scheme. Use `main` for the development branch.
 
-After install: `cd ~/Audit && opencode`
+After install: `cd ~/Projects/audit && opencode`
 
 ### Manual Install
 
 ```bash
-git clone https://github.com/CascadeSTEAM/opencode_auditor.git ~/Audit
-cd ~/Audit
+git clone https://github.com/CascadeSTEAM/opencode_auditor.git ~/Projects/audit
+cd ~/Projects/audit
 bash setup/install.sh
 ```
 
@@ -52,7 +52,7 @@ Then `opencode` from the vault directory. OpenCode reads `AGENTS.md` automatical
 
 ```bash
 # Start a full security audit
-cd ~/Audit && opencode
+cd ~/Projects/audit && opencode
 # Then type: audit my system
 
 # Quick credential exposure check
@@ -113,12 +113,12 @@ Audit/
 
 1. **Copy vault** to new system (or use Obsidian Sync):
    ```bash
-   cp -r /path/to/Audit ~/Audit
+   cp -r /path/to/Audit ~/Projects/audit
    ```
 
 2. **Run setup script** (installs OpenCode if missing, merges permissions):
    ```bash
-   cd ~/Audit
+   cd ~/Projects/audit
    bash setup/install.sh
    ```
    - Checks for OpenCode and installs if missing (via `curl -fsSL https://opencode.ai/install | bash`)
@@ -126,10 +126,10 @@ Audit/
    - Copies skills to `~/.config/opencode/skills/`
    - Creates vault directories if missing
 
-3. **Launch OpenCode** (terminal-based AI agent):
-    ```bash
-    cd ~/Audit
-    opencode
+ 3. **Launch OpenCode** (terminal-based AI agent):
+     ```bash
+     cd ~/Projects/audit
+     opencode
     ```
 
 4. **Or open in Obsidian** — Open Obsidian, choose **"Open folder as vault"**, and select this directory. The `.obsidian/` config and opencode-obsidian plugin are installed by `install.sh`.
@@ -194,7 +194,7 @@ Each audit item includes:
 
 **Q: OpenCode doesn't respond as expected?**
 - Check OpenCode is installed: `opencode --version`
-- Verify you're in the vault directory: `pwd` (should show `/path/to/Audit`)
+- Verify you're in the vault directory: `pwd` (should show the vault root, e.g. `~/Projects/audit`)
 - Ensure `AGENTS.md` exists in vault root
 
 **Q: Edit tool fails repeatedly?**

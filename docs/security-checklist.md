@@ -61,7 +61,7 @@ Risk Assessment:
 | 12 | Temp files with sensitive data | CC6.8 | `ls -la /tmp/ \| grep $(whoami) && find ~/.cache -type f -exec grep -l "password\|key" {} \; 2>/dev/null \| head -5` |
 | 13 | Core dumps enabled | CC6.8 | `ulimit -c && cat /proc/sys/kernel/core_pattern` |
 | 14 | No continuous monitoring | CC7.3 | `crontab -l 2>/dev/null \| grep -i "lynis\|rkhunter\|security"` |
-| 15 | No metrics tracking | CC7.3 | `ls -la ~/Audit/metrics/*.json 2>/dev/null \|\| echo "No metrics files"` |
+| 15 | No metrics tracking | CC7.3 | `ls -la ~/Projects/audit/metrics/*.json 2>/dev/null \|\| echo "No metrics files"` |
 | 16 | World-readable files | CC6.1 | `find ~ -perm -o=r -type f 2>/dev/null \| grep -v "\.git\|node_modules\|cache" \| head -10` |
 
 ### LOW

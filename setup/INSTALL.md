@@ -48,8 +48,8 @@ INSTALL_DIR=/path/to/vault bash <(curl -fsSL https://raw.githubusercontent.com/C
 ### Step 1 — Clone the vault
 
 ```bash
-git clone https://github.com/CascadeSTEAM/opencode_auditor.git ~/Audit
-cd ~/Audit
+git clone https://github.com/CascadeSTEAM/opencode_auditor.git ~/Projects/audit
+cd ~/Projects/audit
 ```
 
 ### Step 2 — Install OpenCode

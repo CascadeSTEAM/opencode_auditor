@@ -10,7 +10,7 @@ set -euo pipefail
 
 REPO="CascadeSTEAM/opencode_auditor"
 BRANCH="main"
-INSTALL_DIR="${INSTALL_DIR:-$HOME/Audit}"
+INSTALL_DIR="${INSTALL_DIR:-$HOME/Projects/audit}"
 GITHUB_RAW="https://raw.githubusercontent.com/$REPO/$BRANCH"
 
 # --- Flags ---
