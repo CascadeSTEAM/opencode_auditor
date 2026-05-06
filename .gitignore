@@ -1,0 +1,26 @@
+# Sensitive system-specific data (stored locally only - visible in Obsidian)
+private/
+
+# Generated metrics (not useful for others - sanitized version kept)
+metrics/*.json
+!metrics/README.md
+
+# Obsidian config (personal)
+.obsidian/
+
+# OpenCode local config (personal model settings)
+.opencode/node_modules/
+.opencode/package.json
+.opencode/package-lock.json
+
+# Temp files
+*.bak
+*~
+*.tmp
+
+# Setup files (already in repo, but just in case)
+setup/INSTALL.md.bak*
+setup/install.sh.bak*
+
+# Build artifacts
+node_modules/
