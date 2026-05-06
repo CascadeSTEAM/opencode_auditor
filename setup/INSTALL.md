@@ -24,21 +24,21 @@ OpenCode is **not** an Obsidian plugin. It runs in your terminal, desktop app, o
 ## Quick Install (Recommended)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/growlf/opencode_audito/main/bootstrap.sh | bash
+curl -fsSL https://raw.githubusercontent.com/CascadeSTEAM/opencode_auditor/main/bootstrap.sh | bash
 ```
 
 This single command clones the repo, runs `install.sh`, and optionally installs security tools.
 
 **Review before running:**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/growlf/opencode_audito/main/bootstrap.sh -o bootstrap.sh
+curl -fsSL https://raw.githubusercontent.com/CascadeSTEAM/opencode_auditor/main/bootstrap.sh -o bootstrap.sh
 less bootstrap.sh
 bash bootstrap.sh
 ```
 
 **With install path:**
 ```bash
-INSTALL_DIR=/path/to/vault bash <(curl -fsSL https://raw.githubusercontent.com/growlf/opencode_audito/main/bootstrap.sh)
+INSTALL_DIR=/path/to/vault bash <(curl -fsSL https://raw.githubusercontent.com/CascadeSTEAM/opencode_auditor/main/bootstrap.sh)
 ```
 
 ---
@@ -48,7 +48,7 @@ INSTALL_DIR=/path/to/vault bash <(curl -fsSL https://raw.githubusercontent.com/g
 ### Step 1 — Clone the vault
 
 ```bash
-git clone https://github.com/growlf/opencode_audito.git ~/Audit
+git clone https://github.com/CascadeSTEAM/opencode_auditor.git ~/Audit
 cd ~/Audit
 ```
 
@@ -97,7 +97,7 @@ jq 'del(.permission)' ~/.config/opencode/opencode.json > /tmp/oc.json \
   && mv /tmp/oc.json ~/.config/opencode/opencode.json
 ```
 
-### Step 4 — Install recommended security tools
+### Step 5 — Install recommended security tools
 
 ```bash
 # Detect OS
@@ -188,6 +188,5 @@ your-vault/
 1. Copy or clone the vault directory (`AGENTS.md`, `INSTALL.md`, `install.sh`, `opencode.fragment.json`, `setup/skills/`, and your audit history)
 2. Run `bash setup/install.sh` on the new system
 3. Launch OpenCode
-4. Launch OpenCode
 
 Your audit history travels with the vault. The only thing installed outside it is the merged global config entry and the skills in `~/.config/opencode/` — `install.sh` handles both.

@@ -18,14 +18,14 @@ This vault provides a **conversational security audit framework** for Linux lapt
 ## Quick Install
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/CascadeSTEAM/opencode_auditor/v0.7.4/bootstrap.sh | bash
+curl -fsSL https://raw.githubusercontent.com/CascadeSTEAM/opencode_auditor/v0.7.6/bootstrap.sh | bash
 ```
 
 This clones the vault to `~/Audit`, runs all setup (permissions, skills, Obsidian config), and optionally installs security tools.
 
 **Review before running:** Download and inspect first:
 ```bash
-curl -fsSL https://raw.githubusercontent.com/CascadeSTEAM/opencode_auditor/v0.7.4/bootstrap.sh -o bootstrap.sh
+curl -fsSL https://raw.githubusercontent.com/CascadeSTEAM/opencode_auditor/v0.7.6/bootstrap.sh -o bootstrap.sh
 less bootstrap.sh
 bash bootstrap.sh
 ```
@@ -34,7 +34,7 @@ bash bootstrap.sh
 
 **Non-interactive:** `YES=1 bash bootstrap.sh`
 
-**Pin to a specific version:** Replace `v0.7.4` with any tag. See `docs/VERSIONING.md` for the versioning scheme. Use `main` for the development branch.
+**Pin to a specific version:** Replace `v0.7.6` with any tag. See `docs/VERSIONING.md` for the versioning scheme. Use `main` for the development branch.
 
 After install: `cd ~/Audit && opencode`
 
@@ -74,7 +74,7 @@ Each session produces a dated plan file (`plan_YYYYMMDD.md`) with per-finding ri
 
 ```
 Audit/
-├── setup/                  # First-run setup files (can ignore after setup)
+├── setup/                  # First-run setup files
 │   ├── INSTALL.md
 │   ├── install.sh
 │   ├── opencode.fragment.json
@@ -84,18 +84,27 @@ Audit/
 │       └── tools/
 │           └── SKILL.md
 ├── AGENTS.md              # Agent instructions (workflow, SOC2)
-├── README.md               # This file (setup & usage)
-├── plan_YYYYMMDD.md        # Active audit (one at a time)
-├── mitigations/            # Individual task files (NN_topic.md)
-│   ├── 01_aws_credentials.md
-│   ├── 02_keepass_key.md
-│   └── ...
-├── completed_audits/       # Finished audits (archived)
-│   └── plan_20260505.md
-├── metrics/                # Security posture trends
-│   ├── security_posture_202605.json
+├── README.md              # This file (setup & usage)
+├── opencode.json          # Vault-local OpenCode config
+├── startup.sh             # Startup health check
+├── bootstrap.sh           # Single-command install script
+├── plan_YYYYMMDD.md       # Active audit (one at a time)
+├── mitigations/           # Individual task files (NN_topic.md)
+├── completed_audits/      # Finished audits (archived)
+│   ├── plan_20260505.md
+│   ├── plan_20260506.md
+│   └── plan_20260506_2.md
+├── metrics/               # Security posture trends
 │   └── README.md
-└── docs/                    # Workflow references and VERSIONING.md
+└── docs/                  # Workflow reference files
+    ├── VERSIONING.md
+    ├── startup-menu.md
+    ├── resolution-workflow.md
+    ├── completion-workflow.md
+    ├── file-conventions.md
+    ├── soc2-controls.md
+    ├── continuous-monitoring.md
+    └── security-checklist.md
 ```
 
 ## Replication on Another System

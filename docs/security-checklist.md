@@ -105,7 +105,7 @@ Use the plan template to create `plan_YYYYMMDD.md`:
 - Each finding includes: Location, Issue, Impact, SOC2 Risk Assessment
 
 ### Step 4: Create Mitigations
-Iterate over plan items → use `mitigation_templates/` to create specific mitigation files in `mitigations/NN_topic.md`
+Iterate over plan items → create specific mitigation files in `mitigations/NN_topic.md`
 
 ### Step 5: Execute Mitigations
 Follow the mitigation plan phases (read-only audit → action → verification) for each item.
@@ -114,7 +114,6 @@ Follow the mitigation plan phases (read-only audit → action → verification) 
 
 ## Notes
 
-- Checklist items map to `mitigation_templates/` (kept as reference during transition)
+- Checklist items map to `mitigations/` for detailed remediation
 - Risk Assessment is mandatory before any mitigation begins (SOC2 compliance)
-- Commands are designed for quick scanning; use `mitigation_templates/` for detailed remediation
-- This checklist will eventually replace `mitigation_templates/` entirely
+- Commands are designed for quick scanning; use `mitigations/NN_topic.md` for detailed remediation

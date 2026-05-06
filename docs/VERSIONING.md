@@ -27,7 +27,7 @@ During initial development, major stays at `0`: `v0.MINOR.PATCH`.
 Users pin the bootstrap URL to a specific tag:
 
 ```
-curl -fsSL https://raw.githubusercontent.com/growlf/opencode_audito/v1.0.0/bootstrap.sh | bash
+curl -fsSL https://raw.githubusercontent.com/CascadeSTEAM/opencode_auditor/v1.0.0/bootstrap.sh | bash
 ```
 
 `main` branch is for development — pin to latest tag for stability.

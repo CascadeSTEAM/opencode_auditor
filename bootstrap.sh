@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
-# Audit Vault — single-command install from github.com/growlf/opencode_audito
+# Audit Vault — single-command install from github.com/CascadeSTEAM/opencode_auditor
 # Usage:
-#   curl -fsSL https://raw.githubusercontent.com/growlf/opencode_audito/v0.6.0/bootstrap.sh | bash
-#   curl -fsSL https://raw.githubusercontent.com/growlf/opencode_audito/v0.6.0/bootstrap.sh | bash -s -- --dry-run
+#   curl -fsSL https://raw.githubusercontent.com/CascadeSTEAM/opencode_auditor/v0.7.6/bootstrap.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/CascadeSTEAM/opencode_auditor/v0.7.6/bootstrap.sh | bash -s -- --dry-run
 #   INSTALL_DIR=/custom/path bash <(curl -fsSL ...)
 #   (Replace v0.6.0 with the latest tag; use main for development)
 
 set -euo pipefail
 
-REPO="growlf/opencode_audito"
+REPO="CascadeSTEAM/opencode_auditor"
 BRANCH="main"
 INSTALL_DIR="${INSTALL_DIR:-$HOME/Audit}"
 GITHUB_RAW="https://raw.githubusercontent.com/$REPO/$BRANCH"
