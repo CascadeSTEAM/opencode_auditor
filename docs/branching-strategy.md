@@ -8,7 +8,7 @@
 All changes to **core vault code** (bootstrap.sh, setup/, docs/, AGENTS.md, .gitignore, opencode.json, startup.sh, README.md) follow this flow:
 
 ```
-feature/fix branch → PR into master → squash-merge → tag release
+feature/fix branch → PR into main → squash-merge → tag release
 ```
 
 ### 1. Create a Branch
@@ -39,14 +39,14 @@ See the **Core Code Bug Workflow** in `AGENTS.md` for the full flow: scope check
 - Body: What changed, why, any risks
 - Request review from at least one other contributor
 
-### 4. Squash-Merge to `master`
+### 4. Squash-Merge to `main`
 
 - Clean, single commit per feature/fix
 - Message format: `T/topic-description: short summary`
 
 ### 5. Tag a Release
 
-After merge, tag `master` with the next version:
+After merge, tag `main` with the next version:
 
 ```bash
 git tag -a vMAJOR.MINOR.PATCH -m "description"
@@ -79,7 +79,7 @@ Scan output and remediation files live outside git — they are immune to check-
 
 ## Pre-1.0 Convention
 
-- `master` is the active development branch
-- No direct commits to `master` (branch + PR only)
+- `main` is the active development branch
+- No direct commits to `main` (branch + PR only)
 - Tags use `v0.MINOR.PATCH` until v1.0
 - v1.0 is tagged when the release criteria in `VERSIONING.md` are met
