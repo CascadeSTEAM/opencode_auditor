@@ -1,14 +1,18 @@
 # File Conventions
 
-| Path | Purpose |
-|---|---|
-| `plan_YYYYMMDD.md` | Active audit — one at a time |
-| `plan_proposal_YYYYMMDD_name.md` | Draft not yet active |
-| `mitigations/NN_topic.md` | Per-item execution log |
-| `completed_audits/` | Archived finished audits |
-| `metrics/security_posture_YYYYMM.json` | Monthly scan metrics |
-| `docs/` | Workflow reference files |
-| `mitigations/` | Created by install.sh; its existence marks install complete |
-| `.startup-required` | Marker — deleted after /audit menu is shown |
+## Tracking Policy
+
+Core vault code is tracked in git. Audit output (plans, mitigations, metrics) is **local only** — immune to check-ins.
+
+| Path | Git | Purpose |
+|------|-----|---------|
+| `plan_YYYYMMDD.md` | Ignored | Active audit — one at a time |
+| `plan_proposal_YYYYMMDD_name.md` | Ignored | Draft not yet active |
+| `mitigations/NN_topic.md` | Ignored | Per-item execution log |
+| `completed_audits/` | Tracked | Archived finished audits |
+| `metrics/security_posture_YYYYMM.json` | Ignored | Monthly scan metrics |
+| `docs/` | Tracked | Workflow reference files |
+| `mitigations/.gitkeep` | Tracked | Directory placeholder (dir created by install.sh) |
+| `.startup-required` | Ignored | Marker — deleted after /audit menu is shown |
 
 **Same-day merge:** If a second plan is created on the same date, append its items to the existing plan (continuing the item numbering), copy mitigations, update Summary. Keep the original filename.

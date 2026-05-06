@@ -47,5 +47,6 @@ Before presenting ANY proposal, plan, or recommendation:
 | `docs/resolution-workflow.md` | Mitigate/Accept/Transfer/Skip flows |
 | `docs/completion-workflow.md` | Archive flow after all items resolved |
 | `docs/soc2-controls.md` | SOC2 control code table |
-| `docs/file-conventions.md` | File path purposes and conventions |
+| `docs/file-conventions.md` | File path purposes, tracking policy |
 | `docs/continuous-monitoring.md` | Weekly/monthly monitoring schedule |
+| `docs/branching-strategy.md` | PR workflow and branch naming for core code |
