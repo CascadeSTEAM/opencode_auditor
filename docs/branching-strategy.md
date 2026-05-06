@@ -37,7 +37,7 @@ See the **Core Code Bug Workflow** in `AGENTS.md` for the full flow: scope check
 
 - Title: `[TYPE] Brief summary`
 - Body: What changed, why, any risks
-- Request review from at least one other contributor
+- Request review from available contributors, or use GitHub Copilot code review
 
 ### 4. Squash-Merge to `main`
 
@@ -70,7 +70,7 @@ See `VERSIONING.md` for bump rules.
 
 | **Not tracked** (local only) | No PR needed |
 |-----------------------------|--------------|
-| `plan_*.md` | — |
+| `audits/plan_*.md` | — |
 | `mitigations/*.md` | — |
 | `metrics/*.json` | — |
 | `.startup-required` | — |
