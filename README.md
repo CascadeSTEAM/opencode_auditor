@@ -2,80 +2,73 @@
 
 ## About This Project
 
-This vault is a **demonstration project** — a real tool I actually use and support — showing what [OpenCode](https://opencode.ai) can do with a bit of chatting and minimum of knowledge. It's free, it's open source, and I hope people enjoy it and use it in good health.
+This vault is a **demonstration project** — a real tool I actually use and support — showing what [OpenCode](https://opencode.ai) can do with a bit of chatting and a little knowledge. It's free, it's open source, and I hope people enjoy it and use it in good health.
 
 It was created as an example for the [Cascade STEAM AI Workshop](https://cascadesteam.org/), and has evolved into a genuine daily-driver security audit framework for my own systems.
 
 ## Purpose
 
-This vault provides a **menu-driven security audit framework** for Linux laptops. It combines:
-- Point-in-time security audits with SOC2 compliance tracking
+This vault provides a **conversational security audit framework** for Linux laptops. It combines:
+- Point-in-time security audits with SOC2 style compliance tracking
 - Automated security tool integration (lynis, rkhunter, fail2ban, firewalld)
-- Remediation tracking with verification and resolution menus
+- Interactive remediation with verification and rollback
 - 30-day holding period for safe deletions
+- Risk assessment reporting
 
 ## Quick Install
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/growlf/opencode_audito/v0.6.0/bootstrap.sh | bash
+curl -fsSL https://raw.githubusercontent.com/CascadeSTEAM/opencode_auditor/v0.7.4/bootstrap.sh | bash
 ```
 
 This clones the vault to `~/Audit`, runs all setup (permissions, skills, Obsidian config), and optionally installs security tools.
 
-**Review before running:** `curl -fsSL .../v0.6.0/bootstrap.sh -o bootstrap.sh && less bootstrap.sh && bash bootstrap.sh`
+**Review before running:** Download and inspect first:
+```bash
+curl -fsSL https://raw.githubusercontent.com/CascadeSTEAM/opencode_auditor/v0.7.4/bootstrap.sh -o bootstrap.sh
+less bootstrap.sh
+bash bootstrap.sh
+```
 
-**Custom install directory:** `INSTALL_DIR=/path/to/vault bash <(curl -fsSL .../v0.6.0/bootstrap.sh)`
+**Custom install directory:** `INSTALL_DIR=/path/to/vault bash bootstrap.sh`
 
-**Non-interactive:** `YES=1 bash <(curl -fsSL ...)`
+**Non-interactive:** `YES=1 bash bootstrap.sh`
 
-**Pin to a specific version:** Replace `v0.6.0` with any tag. See `docs/VERSIONING.md` for the versioning scheme. Use `main` for the bleeding-edge development branch (not recommended for stable installs).
+**Pin to a specific version:** Replace `v0.7.4` with any tag. See `docs/VERSIONING.md` for the versioning scheme. Use `main` for the development branch.
 
 After install: `cd ~/Audit && opencode`
 
-### First Time Setup (Manual)
+### Manual Install
 
-If you prefer to install manually:
+```bash
+git clone https://github.com/CascadeSTEAM/opencode_auditor.git ~/Audit
+cd ~/Audit
+bash setup/install.sh
+```
 
-1. **Clone the repo**:
-    ```bash
-    git clone https://github.com/growlf/opencode_audito.git ~/Audit
-    ```
+Then `opencode` from the vault directory. OpenCode reads `AGENTS.md` automatically and walks you through the workflow conversationally. Just start opencode and start with "Audit my system" - it's that easy.
 
-2. **Run the setup script** (merges permissions to global config):
-    ```bash
-    cd ~/Audit
-    bash setup/install.sh
-    ```
+### Examples
 
-3. **Launch OpenCode** (terminal-based AI agent):
-    ```bash
-    cd ~/Audit
-    opencode
-    ```
+```bash
+# Start a full security audit
+cd ~/Audit && opencode
+# Then type: audit my system
 
-4. **Or open in Obsidian** (the install script scaffolds `.obsidian/` config and installs the opencode-obsidian plugin). Open Obsidian, choose **"Open folder as vault"**, and select this directory.
+# Quick credential exposure check
+opencode -p "Scan ~ for exposed AWS keys, .env files, and secrets in git history"
 
-5. OpenCode reads `AGENTS.md` automatically and shows the **Startup Menu**:
-   - `Quick Scan (Recommended)` — Run lynis + rkhunter + quick checks (~5 min)
-   - `Full Audit` — Generate complete audit plan with default premise
-   - `View Dashboard` — Show security posture trends (if metrics/ exists)
-   - `Wait` — Do nothing for now
+# Check security tool status
+opencode -p "Run lynis quick audit and rkhunter, show me the results"
 
-### Running an Audit
+# View security posture trend
+opencode -p "Show me the metrics from completed_audits/ and metrics/"
 
-1. Select `Quick Scan` (recommended for fast check) or `Full Audit`
-2. OpenCode scans system and generates `plan_YYYYMMDD.md`
-3. For each issue, choose: `Mitigate`, `Accept`, or `Transfer`
-4. Execute mitigations with phase-based menus (Safety → Action → Verify)
-5. After all items resolved, choose: `Archive now`, `Review again`, `Create new audit`
+# Remediate a specific finding
+opencode -p "Walk me through mitigating the SSH root login finding"
+```
 
-### Continuous Monitoring
-
-1. On startup, select `Quick Scan` for immediate security check
-2. Tools run automatically: lynis, rkhunter, fail2ban, firewalld
-3. View results in security dashboard (`metrics/security_posture_YYYYMM.json`)
-4. Weekly cron job runs automated scans (lynis + rkhunter)
-5. Monthly full audit with trending comparison
+Each session produces a dated plan file (`plan_YYYYMMDD.md`) with per-finding risk assessments mapped to SOC2 controls. Issues are resolved through interactive conversation: Mitigate, Accept, or Transfer, with safety audits before destructive actions and verification after.
 
 ## Directory Structure
 
@@ -90,7 +83,7 @@ Audit/
 │       │   └── SKILL.md
 │       └── tools/
 │           └── SKILL.md
-├── AGENTS.md              # Agent instructions (workflow, menus, SOC2)
+├── AGENTS.md              # Agent instructions (workflow, SOC2)
 ├── README.md               # This file (setup & usage)
 ├── plan_YYYYMMDD.md        # Active audit (one at a time)
 ├── mitigations/            # Individual task files (NN_topic.md)
@@ -102,7 +95,7 @@ Audit/
 ├── metrics/                # Security posture trends
 │   ├── security_posture_202605.json
 │   └── README.md
-└── plan_proposal_*.md      # Enhancement proposals (optional)
+└── docs/                    # Workflow references and VERSIONING.md
 ```
 
 ## Replication on Another System
@@ -132,7 +125,7 @@ Audit/
 
 4. **Or open in Obsidian** — Open Obsidian, choose **"Open folder as vault"**, and select this directory. The `.obsidian/` config and opencode-obsidian plugin are installed by `install.sh`.
 
-5. **First run**: OpenCode reads `AGENTS.md` and shows Startup Menu
+5. **First run**: OpenCode reads `AGENTS.md` and walks through the workflow
 
 6. **Install security tools** (optional, for automation):
    ```bash
@@ -149,27 +142,12 @@ Audit/
    sudo pacman -S lynis rkhunter fail2ban firewalld
    ```
 
-## Workflow Summary
+## Resolution Options
 
-### Menu Flow (Automatic — Using Pop-up Question Tool)
-```
-Startup → Quick Scan | Full Audit | View Dashboard | Wait
-         ↓
-Plan Created → Review Plan or Start Mitigations
-         ↓
-For Each Issue → Mitigate | Accept | Transfer
-         ↓
-If Mitigate → Phase1 (Safety) → Phase2 (Action) → Phase3 (Verify)
-         ↓
-After Each Phase → Continue | Re-run | Stop
-         ↓
-All Items Done → Archive Now | Review Again | New Audit
-```
-
-### Resolution Options
-- **Mitigate** — Execute detailed plan with safety audits and verification
-- **Accept** — Document why risk is acceptable (no action needed)
-- **Transfer** — Assign to another person/system
+When a finding is identified, you can:
+- **Mitigate** — Walk through a structured plan with safety audit, action, and verification phases
+- **Accept** — Document why the risk is acceptable (no action needed)
+- **Transfer** — Assign to another person or system
 
 ## Security Tools Integration
 
@@ -195,7 +173,7 @@ Each audit item includes:
 
 ## Key Features
 
-✅ **Menu-driven** — Never auto-proceeds without user input (uses pop-up question tool)
+✅ **Conversational** — OpenCode walks you through audits step by step, asking before any action
 ✅ **SOC2 aligned** — Compliance tracking built-in
 ✅ **Safety first** — Safety audits before destructive actions
 ✅ **30-day holding** — Safe deletion with rollback option
@@ -206,16 +184,16 @@ Each audit item includes:
 ## Migration Notes
 
 - All file paths are absolute (use `$HOME` or `~` in commands)
-- Backup location: `/media/netyeti/Backups/latest/home/`
+- Backup location: configured per-user (e.g. `/media/$USER/Backups/latest/home/`)
 - Holding area: `~/.unused_holding/` (30-day wait)
 - Cron reminders set for holding review
 - **Combine same-day plans**: If multiple plans created same day, merge into one file (see AGENTS.md rule #8)
 
 ## Troubleshooting
 
-**Q: OpenCode doesn't show menus?**
+**Q: OpenCode doesn't respond as expected?**
 - Check OpenCode is installed: `opencode --version`
-- Verify you're in the correct directory: `pwd` (should show `/path/to/Audit`)
+- Verify you're in the vault directory: `pwd` (should show `/path/to/Audit`)
 - Ensure `AGENTS.md` exists in vault root
 
 **Q: Edit tool fails repeatedly?**
@@ -226,7 +204,7 @@ Each audit item includes:
   ```bash
   mv plan_*.md completed_audits/
   ```
-- Restart OpenCode — Startup Menu will appear
+- Restart OpenCode — it will pick up AGENTS.md automatically
 
 **Q: Where are completed audits?**
 - Archived in `completed_audits/` directory
