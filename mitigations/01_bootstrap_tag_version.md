@@ -25,4 +25,4 @@
 ## Resolution
 - **Status:** Mitigated
 - **Date:** 2026-05-06
-- **Notes:** All example URLs updated to v0.7.6. Also fixed growlf/opencode_audito → CascadeSTEAM/opencode_auditor repo references.
+- **Notes:** All example URLs updated to v0.7.6. Also fixed growlf/opencode_audito → CascadeSTEAM/opencode_auditor repo references and stale "Replace v0.6.0" comment on line 7.

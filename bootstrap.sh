@@ -4,7 +4,7 @@
 #   curl -fsSL https://raw.githubusercontent.com/CascadeSTEAM/opencode_auditor/v0.7.6/bootstrap.sh | bash
 #   curl -fsSL https://raw.githubusercontent.com/CascadeSTEAM/opencode_auditor/v0.7.6/bootstrap.sh | bash -s -- --dry-run
 #   INSTALL_DIR=/custom/path bash <(curl -fsSL ...)
-#   (Replace v0.6.0 with the latest tag; use main for development)
+#   (Replace v0.7.6 with the latest tag; use main for development)
 
 set -euo pipefail
 
