@@ -1,12 +1,14 @@
 # Audit Vault — System Security Audit & Remediation Tracking
 
-## Note for Public Repo Users
-This vault is sanitized for public use. System-specific data is in `.private/` (gitignored).
-See `mitigations/templates/` for shareable examples.
+## About This Project
+
+This vault is a **demonstration project** — a real tool I actually use and support — showing what [OpenCode](https://opencode.ai) can do with a bit of chatting and minimum of knowledge. It's free, it's open source, and I hope people enjoy it and use it in good health.
+
+It was created as an example for the [Cascade STEAM AI Workshop](https://cascadesteam.org/), and has evolved into a genuine daily-driver security audit framework for my own systems.
 
 ## Purpose
 
-This vault provides a **menu-driven security audit framework** for Linux laptops used by DevSecOps professionals. It combines:
+This vault provides a **menu-driven security audit framework** for Linux laptops. It combines:
 - Point-in-time security audits with SOC2 compliance tracking
 - Automated security tool integration (lynis, rkhunter, fail2ban, firewalld)
 - Remediation tracking with verification and resolution menus
