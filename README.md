@@ -28,7 +28,7 @@ This clones the vault to `~/Audit`, runs all setup (permissions, skills, Obsidia
 
 **Non-interactive:** `YES=1 bash <(curl -fsSL ...)`
 
-**Pin to a specific version:** Replace `v0.6.0` with any tag. See `VERSIONING.md` for the versioning scheme. Use `main` for the bleeding-edge development branch (not recommended for stable installs).
+**Pin to a specific version:** Replace `v0.6.0` with any tag. See `docs/VERSIONING.md` for the versioning scheme. Use `main` for the bleeding-edge development branch (not recommended for stable installs).
 
 After install: `cd ~/Audit && opencode`
 
