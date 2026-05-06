@@ -2,8 +2,8 @@
 
 This file is for **humans and the agent on first run only**. After setup is complete, `.vault-version` exists and this file is ignored by the agent.
 
-> **Why no `opencode.json` in the vault root?**
-> A known OpenCode bug causes local `opencode.json` files (and potentially `.opencode/` directories) to hide the built-in free/default models. To avoid this, permissions and skills are installed into your global OpenCode config instead. The vault keeps no `opencode.json` at its root; all settings travel with your user account. Skill source files live in `setup/skills/` (outside opencode's scanning paths) and are copied to the global config by `install.sh`.
+> **About `opencode.json` in the vault root**
+> The vault ships with an `opencode.json` at its root. This works fine — it does NOT break access to the free Big Pickle model via OpenCode Zen, as long as `"model": "opencode/big-pickle"` and the `opencode` provider are set. Instructions use a relative path (`"AGENTS.md"`) so the config travels with the vault across machines. Permissions and skills are installed into your global config by `install.sh`.
 
 ---
 
@@ -54,7 +54,7 @@ bash install.sh
 What `install.sh` does:
 1. Creates `~/.config/opencode/` if it doesn't exist
 2. Merges the vault's permission settings into your global `opencode.json` using `jq`
-3. Registers the vault's `AGENTS.md` as an absolute-path instruction in your global config (safety net)
+3. Registers `AGENTS.md` as a relative-path instruction in your vault-local `opencode.json` (portable across machines)
 4. Installs the `templates` and `tools` skills into `~/.config/opencode/skills/`
 
 **What the permissions do:** OpenCode will show an approval dialog before executing any shell command or writing any file. This applies globally — which is sensible, and you can always approve quickly for trusted sessions.
@@ -144,6 +144,7 @@ The install script already scaffolds `.obsidian/` config and downloads the openc
 your-vault/
 ├── .vault-version         ← written by install.sh
 ├── AGENTS.md
+├── opencode.json          ← vault-local config (relative paths, travels with vault)
 ├── INSTALL.md
 ├── install.sh
 ├── opencode.fragment.json

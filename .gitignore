@@ -8,11 +8,10 @@ metrics/*.json
 # Obsidian config (personal)
 .obsidian/
 
-# OpenCode local config (personal model settings)
+# OpenCode local config (personal model settings — file is tracked)
 .opencode/node_modules/
 .opencode/package.json
 .opencode/package-lock.json
-opencode.json
 
 # Temp files
 *.bak

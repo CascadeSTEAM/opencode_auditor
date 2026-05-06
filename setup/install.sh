@@ -67,14 +67,19 @@ jq --argjson perms '{
 mv /tmp/opencode_merged.json "$GLOBAL_CONFIG"
 echo "✓ Permissions merged"
 
-# --- Register vault AGENTS.md as instruction (absolute path) ---
+# --- Register vault AGENTS.md as instruction (relative path in vault-local opencode.json) ---
 echo ""
 echo "Registering vault AGENTS.md as instruction..."
-jq --arg agents "$VAULT_DIR/AGENTS.md" '
-  .instructions = (.instructions // [] | if index($agents) then . else . + [$agents] end)
-' "$GLOBAL_CONFIG" > /tmp/opencode_instructions.json && \
-mv /tmp/opencode_instructions.json "$GLOBAL_CONFIG"
-echo "  ✓ AGENTS.md registered: $VAULT_DIR/AGENTS.md"
+LOCAL_CONFIG="$VAULT_DIR/opencode.json"
+if [[ -f "$LOCAL_CONFIG" ]]; then
+  jq --arg agents "AGENTS.md" '
+    .instructions = (.instructions // [] | if index($agents) then . else . + [$agents] end)
+  ' "$LOCAL_CONFIG" > /tmp/opencode_instructions.json && \
+  mv /tmp/opencode_instructions.json "$LOCAL_CONFIG"
+  echo "  ✓ AGENTS.md registered in $LOCAL_CONFIG"
+else
+  echo "  SKIP — no opencode.json at vault root. Create one manually."
+fi
 
 # --- Setup OpenCode Zen provider with Big Pickle as default ---
 echo ""
