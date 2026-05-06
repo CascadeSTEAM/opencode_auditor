@@ -8,20 +8,24 @@
 All changes to **core vault code** (bootstrap.sh, setup/, docs/, AGENTS.md, .gitignore, opencode.json, startup.sh, README.md) follow this flow:
 
 ```
-feature/fix branch → PR into master → squash-merge → tag release
+feature/fix branch → PR into main → squash-merge → tag release
 ```
 
 ### 1. Create a Branch
 
 ```bash
-git checkout -b T/topic-description
+git checkout -b PREFIX/issue-number-kebab-topic
 ```
 
 | Prefix | Purpose | Example |
 |--------|---------|---------|
 | `F/` | Feature | `F/csv-export` |
-| `FIX/` | Bug fix | `FIX/startup-exit-code` |
+| `FIX/` | Bug fix on tracked core code | `FIX/42-startup-flags` |
 | `DOC/` | Documentation | `DOC/api-ref-update` |
+
+For `FIX/` branches, the issue number is the GitHub issue that describes the bug. Create the issue first via `gh issue create`, then create the branch referencing it.
+
+See the **Core Code Bug Workflow** in `AGENTS.md` for the full flow: scope check → create issue → create branch → fix → PR.
 
 ### 2. Commit on the Branch
 
@@ -33,16 +37,16 @@ git checkout -b T/topic-description
 
 - Title: `[TYPE] Brief summary`
 - Body: What changed, why, any risks
-- Request review from at least one other contributor
+- Request review from available contributors, or use GitHub Copilot code review
 
-### 4. Squash-Merge to `master`
+### 4. Squash-Merge to `main`
 
 - Clean, single commit per feature/fix
 - Message format: `T/topic-description: short summary`
 
 ### 5. Tag a Release
 
-After merge, tag `master` with the next version:
+After merge, tag `main` with the next version:
 
 ```bash
 git tag -a vMAJOR.MINOR.PATCH -m "description"
@@ -75,7 +79,7 @@ Scan output and remediation files live outside git — they are immune to check-
 
 ## Pre-1.0 Convention
 
-- `master` is the active development branch
+- `main` is the active development branch
 - No direct commits to `main` (branch + PR only)
 - Tags use `v0.MINOR.PATCH` until v1.0
 - v1.0 is tagged when the release criteria in `VERSIONING.md` are met
