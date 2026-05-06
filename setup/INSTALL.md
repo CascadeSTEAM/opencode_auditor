@@ -149,7 +149,7 @@ OpenCode reads `AGENTS.md` automatically. On first message it runs the startup s
 
 The install script already scaffolds `.obsidian/` config and downloads the opencode-obsidian plugin. Just open Obsidian, select **"Open folder as vault"**, and pick this directory.
 
-> `install.sh` already created `mitigations/`, `completed_audits/`, and `metrics/` — nothing else needed.
+> `install.sh` already created `audits/completed/`, `mitigations/`, and `metrics/` — nothing else needed.
 
 ---
 
@@ -177,7 +177,7 @@ your-vault/
 │       └── tools/
 │           └── SKILL.md
 ├── mitigations/           ← created by install.sh
-├── completed_audits/      ← created by install.sh
+├── audits/completed/      ← created by install.sh
 └── metrics/               ← created by install.sh
 ```
 

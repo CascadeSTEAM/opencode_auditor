@@ -10,7 +10,7 @@ When all items in an audit plan are resolved:
 ```
 question([{ header: "Audit Complete", question: "Archive this plan?",
   options: [
-    { label: "Archive now (Recommended)", description: "Move to completed_audits/" },
+    { label: "Archive now (Recommended)", description: "Move to audits/completed/" },
     { label: "Review again",              description: "Walk through items once more" },
     { label: "Create new audit",          description: "Start a fresh plan" }
   ]

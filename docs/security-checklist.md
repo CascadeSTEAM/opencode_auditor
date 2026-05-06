@@ -1,6 +1,6 @@
 # Security Audit Checklist
 
-**Purpose:** Quick-scan reference and finding generator for `plan_YYYYMMDD.md`. Use this checklist to identify findings, then complete the Risk Assessment before any mitigation begins.
+**Purpose:** Quick-scan reference and finding generator for `audits/plan_YYYYMMDD.md`. Use this checklist to identify findings, then complete the Risk Assessment before any mitigation begins.
 
 **⚠️ Mandatory:** A Risk Assessment (Likelihood, Impact, Risk Level) must be completed for each finding before mitigation can start.
 
@@ -99,7 +99,7 @@ For each finding, fill out the Risk Assessment Framework (see above):
 - Set Compliance Status to "Open"
 
 ### Step 3: Generate Plan
-Use the plan template to create `plan_YYYYMMDD.md`:
+Use the plan template to create `audits/plan_YYYYMMDD.md`:
 - Summary table with all findings (sorted by Risk Level: Critical → High → Medium → Low)
 - Detailed sections for each priority level
 - Each finding includes: Location, Issue, Impact, SOC2 Risk Assessment

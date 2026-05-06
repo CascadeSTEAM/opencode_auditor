@@ -155,11 +155,11 @@ echo ""
 echo "Creating vault scaffold in $VAULT_DIR ..."
 
 # Create directory structure (mitigations/ existence = install-complete marker)
-mkdir -p "$VAULT_DIR/mitigations" "$VAULT_DIR/completed_audits" "$VAULT_DIR/metrics"
+mkdir -p "$VAULT_DIR/audits/completed" "$VAULT_DIR/mitigations" "$VAULT_DIR/metrics"
 mkdir -p "$VAULT_DIR/docs"
 mkdir -p "$VAULT_DIR/.obsidian/plugins"
 
-echo "✓ mitigations/ completed_audits/ metrics/ created"
+echo "✓ audits/completed/ mitigations/ metrics/ created"
 echo "✓ docs/ created"
 
 # Copy startup.sh and make executable

@@ -2,6 +2,8 @@
 
 Present when user types `/audit` — after running `./startup.sh`.
 
+> **Custom input:** At any menu, type your own response instead of picking an option. This enters discussion mode — ask questions, explore options, or get clarification before deciding.
+
 ## If active audit exists
 
 ```

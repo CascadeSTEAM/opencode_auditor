@@ -8,10 +8,32 @@ question([{ header: "Item #N — [PRIORITY] — Title", question: "How to resolv
     { label: "Mitigate",       description: "Create and execute a remediation plan" },
     { label: "Accept risk",    description: "Document why this risk is acceptable" },
     { label: "Transfer",       description: "Assign to another party or system" },
+    { label: "Defer",          description: "Skip for now, keep tracking — revisit later" },
     { label: "Skip for now",   description: "Return to this item later in the session" }
   ]
 }])
 ```
+
+> **Custom input:** At any question, type your own response to ask questions, discuss the finding, or understand risks better. The agent will treat this as discussion mode — answering your questions, explaining context, and re-presenting the options afterward.
+
+## Discussion Mode
+
+When a user enters custom text instead of picking a preset option:
+
+1. Answer their question or clarify the issue
+2. Provide relevant context (risk, impact, remediation effort, alternatives)
+3. Re-present the resolution options:
+   ```
+   question([{ header: "Item #N — [PRIORITY] — Title", question: "Now how would you like to proceed?",
+     options: [
+       { label: "Mitigate",       description: "Create and execute a remediation plan" },
+       { label: "Accept risk",    description: "Document why this risk is acceptable" },
+       { label: "Transfer",       description: "Assign to another party or system" },
+       { label: "Defer",          description: "Skip for now, keep tracking — revisit later" },
+       { label: "Skip for now",   description: "Return to this item later in the session" }
+     ]
+   }])
+   ```
 
 ## Mitigate
 
@@ -40,6 +62,10 @@ Ask for reason → mark `- [ ] Accepted: <reason>` (intentionally not `[x]`; tra
 ## Transfer
 
 Ask who/what is responsible → mark `- [ ] Transferred: <who> — <reason>`
+
+## Defer
+
+Mark `- [ ] Deferred: <reason if any>` — item stays unchecked, will be re-presented on next resume.
 
 ## Skip
 
