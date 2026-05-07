@@ -174,8 +174,13 @@ echo "✓ .startup-required marker created"
 
 # --- Hand off to Opencode ---
 echo ""
-echo "Handing off remaining setup to Opencode..."
-opencode "Load the install skill from setup/skills/install/SKILL.md and complete the Audit Vault setup for this OS (install security tools, configure Obsidian, scaffold directories)"
+if command -v opencode &>/dev/null; then
+  echo "Handing off remaining setup to Opencode..."
+  opencode "Load the install skill from setup/skills/install/SKILL.md and complete the Audit Vault setup for this OS (install security tools, configure Obsidian, scaffold directories)"
+else
+  echo "Opencode not found — skipping automated setup."
+  echo "Install Opencode and run: opencode"
+fi
 
 # --- Done ---
 echo ""
