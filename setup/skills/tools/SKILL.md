@@ -4,29 +4,6 @@
 
 Load this skill before running or recommending any security audit tool.
 
-## Install Commands
-
-### Arch Linux
-```bash
-sudo pacman -S lynis rkhunter fail2ban firewalld
-```
-
-### Ubuntu/Debian
-```bash
-sudo apt install lynis rkhunter fail2ban firewalld
-```
-
-### Fedora
-```bash
-sudo dnf install lynis rkhunter fail2ban firewalld
-```
-
-### macOS (partial)
-```bash
-brew install lynis
-# rkhunter and fail2ban have limited macOS support
-```
-
 ## Tool Run Commands
 
 ### lynis — System Hardening Audit
@@ -102,4 +79,29 @@ systemctl list-units --type=service --state=running
 
 # World-readable sensitive files
 find /home -perm /o+r -type f -name "*.key" -o -name "*.pem" -o -name "*.kdbx" 2>/dev/null
+```
+
+## Install Commands
+
+> One-time setup — not part of scans. Run only when tools are missing.
+
+### Arch Linux
+```bash
+sudo pacman -S lynis rkhunter fail2ban firewalld
+```
+
+### Ubuntu/Debian
+```bash
+sudo apt install lynis rkhunter fail2ban firewalld
+```
+
+### Fedora
+```bash
+sudo dnf install lynis rkhunter fail2ban firewalld
+```
+
+### macOS (partial)
+```bash
+brew install lynis
+# rkhunter and fail2ban have limited macOS support
 ```
