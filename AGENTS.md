@@ -46,8 +46,8 @@ When a bug or security issue is discovered in **core vault code** (tracked files
 1. **Scope check** — Is this a system security finding (auditd, ports, SSH, .env, etc.)? If yes, log locally only. If it affects a tracked core file, proceed.
 2. **Create GitHub issue** — Run `gh issue create --title "FIX: short description" --body "What, where, impact"` to track it in the upstream repo.
 3. **Create connected branch** — `git checkout -b FIX/<issue-number>-<kebab-topic>` from main.
-4. **Propose plan for self-critique** — Present the proposed fix (what files, what changes, risks) with a self-critique focused on weak points and failures. Ask the user: "Can you critique/review the plan?"
-5. **Iterate on feedback** — User responds to each point (accept/reject/discuss/clarify). Revise the plan and repeat step 4 as needed.
+4. **Propose plan with self-critique and begin review cycle** — Combine the proposed fix (what files, what changes, risks) with a self-critique focused on weak points and failures. Then break each distinct point into a separate Question-tool prompt with Accept/Reject/Discuss options for the user.
+5. **Iterate on feedback** — User responds to each point. For any point tagged Discuss/Clarify, revise and re-present just that point via the Question tool. Repeat until all points are settled (no Discuss/Clarify remaining).
 6. **Wait for explicit plan approval** — After all feedback is settled, ask: "Do you approve this plan for implementation?" Do NOT write a single line of code until the user explicitly says yes. The review cycle and the implementation go-ahead are separate gates.
 7. **Implement fix** — On the FIX/ branch, commit the fix with present-tense messages.
 8. **Open PR** — Push the branch, open a PR referencing the issue. The issue auto-closes on merge.
