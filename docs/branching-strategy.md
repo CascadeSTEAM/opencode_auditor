@@ -25,7 +25,7 @@ git checkout -b PREFIX/issue-number-kebab-topic
 
 For `FIX/` branches, the issue number is the GitHub issue that describes the bug. Create the issue first via `gh issue create`, then create the branch referencing it.
 
-See the **Core Code Bug Workflow** in `AGENTS.md` for the full flow: scope check → create issue → create branch → propose plan → fix → PR → merge → next issue.
+See the **Core Code Bug Workflow** in `AGENTS.md` for the full flow: scope check → create issue → create branch → propose plan → iterate on feedback → wait for approval → fix → PR → merge → next issue.
 
 ### 2. Commit on the Branch
 
