@@ -107,41 +107,13 @@ else
   bash "$INSTALL_DIR/setup/install.sh"
 fi
 
-# --- Optional: security tools ---
-if command -v apt &>/dev/null; then
-  echo ""
-  if [[ "${YES:-}" == "1" ]]; then
-    INSTALL_TOOLS=true
-  elif [[ "$DRY_RUN" != true ]]; then
-    read -rp "Install recommended security tools (lynis, rkhunter, fail2ban)? [Y/n] " REPLY
-    INSTALL_TOOLS=true
-    if [[ -n "$REPLY" && ! "$REPLY" =~ ^[Yy] ]]; then
-      INSTALL_TOOLS=false
-    fi
-  fi
-
-  if [[ "${INSTALL_TOOLS:-false}" == true ]]; then
-    echo "Installing security tools..."
-    sudo apt update && sudo apt install -y lynis rkhunter fail2ban
-    info "Security tools installed"
-  else
-    warn "Skipping security tools. Install later: sudo apt install lynis rkhunter fail2ban"
-  fi
-else
-  echo ""
-  warn "Unrecognized package manager. Install tools manually for your distro."
-fi
-
 # --- Done ---
 echo ""
 echo "========================================"
-echo "  Audit Vault install complete!"
+echo "  Audit Vault scaffold complete!"
 echo "========================================"
 echo ""
-echo "  Next steps:"
-echo "    cd $INSTALL_DIR"
-echo "    opencode"
+echo "  Installer will now finish setup via Opencode."
+echo "  Follow the prompts to install security tools and configure Obsidian."
 echo ""
-echo "  Or open in Obsidian as a vault folder."
-echo "  See $INSTALL_DIR/README.md for full docs."
-echo ""
+syntax error
