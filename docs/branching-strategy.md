@@ -36,7 +36,7 @@ See the **Core Code Bug Workflow** in `AGENTS.md` for the full flow: scope check
 ### 3. Open a Pull Request
 
 - Title: `[TYPE] Brief summary`
-- Body: What changed, why, any risks
+- Body: Use the PR template (`.github/PULL_REQUEST_TEMPLATE.md`) — includes checklist for shellcheck, markdown links, commit style, and branch naming
 - Request review from available contributors, or use GitHub Copilot code review
 
 ### 4. Squash-Merge to `main`
