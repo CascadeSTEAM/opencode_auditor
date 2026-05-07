@@ -1,5 +1,7 @@
 # Tools Skill — Security Tool Install and Run Reference
 
+> **All scans below are read-only.** No system changes, no installations, no modifications. The commands only inspect and report. If a finding needs remediation, it will be presented for your review and approval before any change is made.
+
 Load this skill before running or recommending any security audit tool.
 
 ## Install Commands
