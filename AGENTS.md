@@ -47,7 +47,7 @@ When a bug or security issue is discovered in **core vault code** (tracked files
 3. **Create connected branch** — `git checkout -b FIX/<issue-number>-<kebab-topic>` from main.
 4. **Propose plan for self-critique** — Present the proposed fix (what files, what changes, risks) with a self-critique focused on weak points and failures. Ask the user: "Can you critique/review the plan?"
 5. **Iterate on feedback** — User responds to each point (accept/reject/discuss/clarify). Revise the plan and repeat step 4 as needed.
-6. **Wait for approval** — Do NOT write code until all points are settled and the user explicitly approves.
+6. **Wait for explicit plan approval** — After all feedback is settled, ask: "Do you approve this plan for implementation?" Do NOT write a single line of code until the user explicitly says yes. The review cycle and the implementation go-ahead are separate gates.
 7. **Implement fix** — On the FIX/ branch, commit the fix with present-tense messages.
 8. **Open PR** — Push the branch, open a PR referencing the issue. The issue auto-closes on merge.
 9. **Wait for merge** — Do NOT start the next issue until the current PR is merged. One active change at a time. External contributor PRs are exempt — rebase ours to resolve conflicts if needed.
