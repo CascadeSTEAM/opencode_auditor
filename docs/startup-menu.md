@@ -1,6 +1,6 @@
 # Startup Menu
 
-Present when user types `/audit` — after running `./startup.sh`.
+Use the Question tool to present this menu when the user asks about auditing — after running `./startup.sh`.
 
 > **Custom input:** At any menu, type your own response instead of picking an option. This enters discussion mode — ask questions, explore options, or get clarification before deciding.
 
