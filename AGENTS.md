@@ -18,7 +18,7 @@ For the menu options that open workflows (Resume, Quick Scan, Full Audit, etc.),
 - If `edit` fails twice on same file, use `write` (full rewrite). Never third `edit`
 - After every `write` or `edit`, use `read` to verify the change landed
 - One active audit at a time — no new `audits/plan_*.md` while any existing one has unchecked `- [ ]` items
-- **One active change at a time** — no new FIX/FEAT/DOC branch while any open PR exists. Merge or close the current PR before starting the next issue.
+- **One active change at a time** — no new FIX/FEAT/DOC branch from us while any open PR exists. Merge or close the current PR before starting the next issue. External contributor PRs are exempt — rebase ours to resolve conflicts if needed.
 - **Automatic branching:** Before modifying any tracked file (anything not in `.gitignore`), check current branch. If on `main`, create a feature/fix/doc branch first (`F/`, `FIX/`, or `DOC/` prefix). See `docs/branching-strategy.md` for conventions. If only touching gitignored/local-only files (plans, mitigations, metrics), no branch needed.
 
 ## Self-Critique Enforcement
@@ -49,7 +49,7 @@ When a bug or security issue is discovered in **core vault code** (tracked files
 4. **Propose plan for review** — Present the proposed fix to the user (what files, what changes, risks). Do NOT write code until user approves the plan.
 5. **Implement fix** — On the FIX/ branch, commit the fix with present-tense messages.
 6. **Open PR** — Push the branch, open a PR referencing the issue. The issue auto-closes on merge.
-7. **Wait for merge** — Do NOT start the next issue until the current PR is merged. One active change at a time.
+7. **Wait for merge** — Do NOT start the next issue until the current PR is merged. One active change at a time. External contributor PRs are exempt — rebase ours to resolve conflicts if needed.
 
 > System security scan findings (auditd, ports, .env exposure, etc.) never generate GitHub issues. They are logged in `audits/plan_*.md` and remain local-only per existing policy. See `docs/branching-strategy.md` for branch naming rules.
 
