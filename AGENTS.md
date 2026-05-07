@@ -18,6 +18,7 @@ For the menu options that open workflows (Resume, Quick Scan, Full Audit, etc.),
 - If `edit` fails twice on same file, use `write` (full rewrite). Never third `edit`
 - After every `write` or `edit`, use `read` to verify the change landed
 - One active audit at a time — no new `audits/plan_*.md` while any existing one has unchecked `- [ ]` items
+- **One active change at a time** — no new FIX/FEAT/DOC branch while any open PR exists. Merge or close the current PR before starting the next issue.
 - **Automatic branching:** Before modifying any tracked file (anything not in `.gitignore`), check current branch. If on `main`, create a feature/fix/doc branch first (`F/`, `FIX/`, or `DOC/` prefix). See `docs/branching-strategy.md` for conventions. If only touching gitignored/local-only files (plans, mitigations, metrics), no branch needed.
 
 ## Self-Critique Enforcement
@@ -45,8 +46,10 @@ When a bug or security issue is discovered in **core vault code** (tracked files
 1. **Scope check** — Is this a system security finding (auditd, ports, SSH, .env, etc.)? If yes, log locally only. If it affects a tracked core file, proceed.
 2. **Create GitHub issue** — Run `gh issue create --title "FIX: short description" --body "What, where, impact"` to track it in the upstream repo.
 3. **Create connected branch** — `git checkout -b FIX/<issue-number>-<kebab-topic>` from main.
-4. **Implement fix** — On the FIX/ branch, commit the fix with present-tense messages.
-5. **Open PR** — Push the branch, open a PR referencing the issue. The issue auto-closes on merge.
+4. **Propose plan for review** — Present the proposed fix to the user (what files, what changes, risks). Do NOT write code until user approves the plan.
+5. **Implement fix** — On the FIX/ branch, commit the fix with present-tense messages.
+6. **Open PR** — Push the branch, open a PR referencing the issue. The issue auto-closes on merge.
+7. **Wait for merge** — Do NOT start the next issue until the current PR is merged. One active change at a time.
 
 > System security scan findings (auditd, ports, .env exposure, etc.) never generate GitHub issues. They are logged in `audits/plan_*.md` and remain local-only per existing policy. See `docs/branching-strategy.md` for branch naming rules.
 
