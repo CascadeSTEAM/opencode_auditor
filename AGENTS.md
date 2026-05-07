@@ -1,14 +1,12 @@
 # AGENTS.md — Audit Vault
 
-<!-- v4.1 | /audit command replaces mandatory startup; workflows moved to docs/ -->
+## Starting an audit
 
-## /audit command
-
-When user types `/audit`:
+When the user asks about auditing their system (e.g. "run an audit", "scan my system", "security check"):
 
 1. Run `./startup.sh` and note the results
 2. Read `docs/startup-menu.md` for menu definitions
-3. Present the appropriate menu (active audit exists vs. none)
+3. Present the appropriate menu via the Question tool (active audit exists vs. none)
 4. Delete `.startup-required` if present
 
 For the menu options that open workflows (Resume, Quick Scan, Full Audit, etc.), read the relevant file in `docs/` for detailed instructions.
@@ -56,11 +54,10 @@ When a bug or security issue is discovered in **core vault code** (tracked files
 
 | File | Content |
 |---|---|
-| `docs/startup-menu.md` | Menu definitions for /audit |
+| `docs/startup-menu.md` | Menu definitions for the audit startup menu |
 | `docs/resolution-workflow.md` | Mitigate/Accept/Transfer/Defer/Skip flows |
 | `docs/completion-workflow.md` | Archive flow after all items resolved |
 | `docs/soc2-controls.md` | SOC2 control code table |
 | `docs/file-conventions.md` | File path purposes, tracking policy |
 | `docs/continuous-monitoring.md` | Weekly/monthly monitoring schedule |
-| `docs/branching-strategy.md` | PR workflow and branch naming for core code |
 | `docs/branching-strategy.md` | PR workflow and branch naming for core code |
