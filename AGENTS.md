@@ -6,7 +6,8 @@ When the user asks about auditing their system, checking security, reviewing pas
 
 1. Run `./startup.sh` and note the results
 2. Read `docs/startup-menu.md` for menu definitions
-3. Present the appropriate menu via the Question tool (active audit exists vs. none)
+3. **Inform the user: every scan is read-only — nothing is installed, modified, or removed without their explicit review and approval**
+4. Present the appropriate menu via the Question tool (active audit exists vs. none)
 
 For the menu options that open workflows (Resume, Quick Scan, Full Audit, etc.), read the relevant file in `docs/` for detailed instructions.
 

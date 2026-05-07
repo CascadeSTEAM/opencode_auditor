@@ -1,29 +1,8 @@
 # Tools Skill — Security Tool Install and Run Reference
 
+> **All scans below are read-only.** No system changes, no installations, no modifications. The commands only inspect and report. If a finding needs remediation, it will be presented for your review and approval before any change is made.
+
 Load this skill before running or recommending any security audit tool.
-
-## Install Commands
-
-### Arch Linux
-```bash
-sudo pacman -S lynis rkhunter fail2ban firewalld
-```
-
-### Ubuntu/Debian
-```bash
-sudo apt install lynis rkhunter fail2ban firewalld
-```
-
-### Fedora
-```bash
-sudo dnf install lynis rkhunter fail2ban firewalld
-```
-
-### macOS (partial)
-```bash
-brew install lynis
-# rkhunter and fail2ban have limited macOS support
-```
 
 ## Tool Run Commands
 
@@ -100,4 +79,29 @@ systemctl list-units --type=service --state=running
 
 # World-readable sensitive files
 find /home -perm /o+r -type f -name "*.key" -o -name "*.pem" -o -name "*.kdbx" 2>/dev/null
+```
+
+## Install Commands
+
+> One-time setup — not part of scans. Run only when tools are missing.
+
+### Arch Linux
+```bash
+sudo pacman -S lynis rkhunter fail2ban firewalld
+```
+
+### Ubuntu/Debian
+```bash
+sudo apt install lynis rkhunter fail2ban firewalld
+```
+
+### Fedora
+```bash
+sudo dnf install lynis rkhunter fail2ban firewalld
+```
+
+### macOS (partial)
+```bash
+brew install lynis
+# rkhunter and fail2ban have limited macOS support
 ```

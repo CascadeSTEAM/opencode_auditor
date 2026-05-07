@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: lycheeverse/lychee-action@v2
+      - uses: lycheeverse/lychee-action@v2.3.0
         with:
-          args: -- *.md docs/**/*.md .github/**/*.md --verbose
+          args: --max-concurrency 8 -- *.md docs/**/*.md .github/**/*.md --verbose
           fail: true
