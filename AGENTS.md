@@ -2,12 +2,11 @@
 
 ## Starting an audit
 
-When the user asks about auditing their system (e.g. "run an audit", "scan my system", "security check"):
+When the user asks about auditing their system, checking security, reviewing past results, or anything clearly related to operating the vault — including but not limited to "run an audit", "scan my system", "security check", "view dashboard", "resume last audit", "show me metrics":
 
 1. Run `./startup.sh` and note the results
 2. Read `docs/startup-menu.md` for menu definitions
 3. Present the appropriate menu via the Question tool (active audit exists vs. none)
-4. Delete `.startup-required` if present
 
 For the menu options that open workflows (Resume, Quick Scan, Full Audit, etc.), read the relevant file in `docs/` for detailed instructions.
 
