@@ -1,5 +1,13 @@
 # Audit Vault — System Security Audit & Remediation Tracking
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Shellcheck](https://github.com/CascadeSTEAM/opencode_auditor/actions/workflows/shellcheck.yml/badge.svg)](https://github.com/CascadeSTEAM/opencode_auditor/actions/workflows/shellcheck.yml)
+[![Check Markdown Links](https://github.com/CascadeSTEAM/opencode_auditor/actions/workflows/markdown-links.yml/badge.svg)](https://github.com/CascadeSTEAM/opencode_auditor/actions/workflows/markdown-links.yml)
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for how to file issues, submit PRs, and code style guidelines. This project follows the [Contributor Covenant](CODE_OF_CONDUCT.md) code of conduct.
+
 ## About This Project
 
 This vault is a **demonstration project** — a real tool I actually use and support — showing what [OpenCode](https://opencode.ai) can do with a bit of chatting and a little knowledge. It's free, it's open source, and I hope people enjoy it and use it in good health.

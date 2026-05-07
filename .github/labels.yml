@@ -1,0 +1,42 @@
+- name: bug
+  color: d73a4a
+  description: Something is broken
+- name: documentation
+  color: 0075ca
+  description: Docs-only changes
+- name: duplicate
+  color: cfd3d7
+  description: Already reported
+- name: enhancement
+  color: a2eeef
+  description: New feature or request
+- name: good first issue
+  color: 7057ff
+  description: Good for newcomers
+- name: help wanted
+  color: 008672
+  description: Looking for contributors
+- name: invalid
+  color: e4e669
+  description: Not applicable
+- name: question
+  color: d876e3
+  description: Needs clarification
+- name: wontfix
+  color: ffffff
+  description: Will not address
+- name: priority: critical
+  color: fef2c0
+  description: Priority critical
+- name: priority: high
+  color: fef2c0
+  description: Priority high
+- name: priority: medium
+  color: fef2c0
+  description: Priority medium
+- name: priority: low
+  color: fef2c0
+  description: Priority low
+- name: dependencies
+  color: 0366d6
+  description: Dependency updates
