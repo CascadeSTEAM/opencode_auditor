@@ -116,3 +116,4 @@ echo ""
 echo "  Installer will now finish setup via Opencode."
 echo "  Follow the prompts to install security tools and configure Obsidian."
 echo ""
+syntax error
