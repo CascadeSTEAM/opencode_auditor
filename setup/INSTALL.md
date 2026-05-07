@@ -27,7 +27,7 @@ OpenCode is **not** an Obsidian plugin. It runs in your terminal, desktop app, o
 curl -fsSL https://raw.githubusercontent.com/CascadeSTEAM/opencode_auditor/main/bootstrap.sh | bash
 ```
 
-This single command clones the repo, runs `install.sh`, and optionally installs security tools.
+This single command clones the repo, runs `install.sh`, then hands off remaining setup to Opencode (installs security tools, configures Obsidian).
 
 **Review before running:**
 ```bash
@@ -45,32 +45,20 @@ INSTALL_DIR=/path/to/vault bash <(curl -fsSL https://raw.githubusercontent.com/C
 
 ## Manual Install Steps
 
-### Step 1 — Clone the vault
+### Step 1 — Install OpenCode
+
+```bash
+curl -fsSL https://opencode.ai/install | bash
+```
+
+### Step 2 — Clone the vault
 
 ```bash
 git clone https://github.com/CascadeSTEAM/opencode_auditor.git ~/Projects/audit
 cd ~/Projects/audit
 ```
 
-### Step 2 — Install OpenCode
-
-```bash
-# Arch Linux
-sudo pacman -S opencode
-
-# Homebrew (macOS/Linux)
-brew install anomalyco/tap/opencode
-
-# npm
-npm i -g opencode-ai@latest
-
-# Direct install script
-curl -fsSL https://opencode.ai/install | bash
-```
-
-Verify: `opencode --version`
-
-### Step 3 — Merge permissions into your global OpenCode config
+### Step 3 — Run the vault installer
 
 ```bash
 bash setup/install.sh
@@ -79,10 +67,11 @@ bash setup/install.sh
 What `install.sh` does:
 1. Creates `~/.config/opencode/` if it doesn't exist
 2. Merges the vault's permission settings into your global `opencode.json` using `jq`
-3. Registers `AGENTS.md` as a relative-path instruction in your vault-local `opencode.json` (portable across machines)
-4. Installs the `templates` and `tools` skills into `~/.config/opencode/skills/`
+3. Installs the `templates` and `tools` skills into `~/.config/opencode/skills/`
+4. Creates vault directories (`audits/completed/`, `mitigations/`, `metrics/`)
+5. Invokes Opencode to complete OS-specific setup (security tools, Obsidian config, plugin download)
 
-**What the permissions do:** OpenCode will show an approval dialog before executing any shell command or writing any file. This applies globally — which is sensible, and you can always approve quickly for trusted sessions.
+**What the permissions do:** OpenCode will show an approval dialog before executing any shell command or writing any file.
 
 To review what will be merged before running:
 
@@ -97,44 +86,7 @@ jq 'del(.permission)' ~/.config/opencode/opencode.json > /tmp/oc.json \
   && mv /tmp/oc.json ~/.config/opencode/opencode.json
 ```
 
-### Step 5 — Install recommended security tools
-
-```bash
-# Detect OS
-cat /etc/os-release | grep "^ID="
-```
-
-**Ubuntu / Debian:**
-```bash
-sudo apt update && sudo apt install lynis rkhunter fail2ban firewalld
-```
-
-**Fedora:**
-```bash
-sudo dnf install lynis rkhunter fail2ban firewalld
-```
-
-**Arch:**
-```bash
-sudo pacman -S lynis rkhunter fail2ban firewalld
-```
-
-**macOS:**
-```bash
-brew install lynis
-# rkhunter and fail2ban have limited macOS support
-```
-
-Verify:
-```bash
-for tool in lynis rkhunter fail2ban firewalld; do
-  command -v $tool && echo "✓ $tool" || echo "✗ $tool MISSING"
-done
-```
-
 ---
-
-## Step 4 — Launch OpenCode or Open in Obsidian
 
 **Option A — OpenCode (terminal-based AI agent):**
 
@@ -147,9 +99,9 @@ OpenCode reads `AGENTS.md` automatically. On first message it runs the startup s
 
 **Option B — Obsidian (note-taking UI):**
 
-The install script already scaffolds `.obsidian/` config and downloads the opencode-obsidian plugin. Just open Obsidian, select **"Open folder as vault"**, and pick this directory.
+Opencode sets up `.obsidian/` config and downloads the opencode-obsidian plugin. After install.sh completes, just open Obsidian, select **"Open folder as vault"**, and pick this directory.
 
-> `install.sh` already created `audits/completed/`, `mitigations/`, and `metrics/` — nothing else needed.
+> `install.sh` creates `audits/completed/`, `mitigations/`, and `metrics/` — Opencode handles the rest.
 
 ---
 
