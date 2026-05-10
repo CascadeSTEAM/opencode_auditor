@@ -1,3 +1,8 @@
+---
+name: vault-security-tools
+description: Security tool run commands and install instructions for lynis, rkhunter, fail2ban, firewalld, OpenSCAP, and auditd.
+---
+
 # Tools Skill — Security Tool Install and Run Reference
 
 > **All scans below are read-only.** No system changes, no installations, no modifications. The commands only inspect and report. If a finding needs remediation, it will be presented for your review and approval before any change is made.

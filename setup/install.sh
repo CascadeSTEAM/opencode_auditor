@@ -56,15 +56,16 @@ echo "Backup saved: $BACKUP"
 
 # --- Merge permissions (existing keys win for everything except permission block) ---
 # Strategy: deep-merge permission block; all other existing keys are preserved
+TMP_MERGE=$(mktemp)
 jq --argjson perms '{
   "bash":  "ask",
   "edit":  "ask",
   "write": "ask"
 }' '
   .permission = (.permission // {} | . + $perms)
-' "$GLOBAL_CONFIG" > /tmp/opencode_merged.json
+' "$GLOBAL_CONFIG" > "$TMP_MERGE"
 
-mv /tmp/opencode_merged.json "$GLOBAL_CONFIG"
+mv "$TMP_MERGE" "$GLOBAL_CONFIG"
 echo "✓ Permissions merged"
 
 # --- Register vault AGENTS.md as instruction (relative path in vault-local opencode.json) ---
@@ -72,10 +73,11 @@ echo ""
 echo "Registering vault AGENTS.md as instruction..."
 LOCAL_CONFIG="$VAULT_DIR/opencode.json"
 if [[ -f "$LOCAL_CONFIG" ]]; then
+  TMP_INSTRUCT=$(mktemp)
   jq --arg agents "AGENTS.md" '
     .instructions = (.instructions // [] | if index($agents) then . else . + [$agents] end)
-  ' "$LOCAL_CONFIG" > /tmp/opencode_instructions.json && \
-  mv /tmp/opencode_instructions.json "$LOCAL_CONFIG"
+  ' "$LOCAL_CONFIG" > "$TMP_INSTRUCT" && \
+  mv "$TMP_INSTRUCT" "$LOCAL_CONFIG"
   echo "  ✓ AGENTS.md registered in $LOCAL_CONFIG"
 else
   echo "  SKIP — no opencode.json at vault root. Create one manually."
@@ -85,6 +87,7 @@ fi
 echo ""
 echo "Setting up OpenCode Zen provider (big-pickle default)..."
 
+TMP_ZEN=$(mktemp)
 jq --argjson opencode '{
   "npm": "@ai-sdk/openai-compatible",
   "name": "OpenCode Zen",
@@ -105,9 +108,9 @@ jq --argjson opencode '{
 }' '
   .model = (.model // "opencode/big-pickle") |
   .provider.opencode = (.provider.opencode // $opencode)
-' "$GLOBAL_CONFIG" > /tmp/opencode_zen.json
+' "$GLOBAL_CONFIG" > "$TMP_ZEN"
 
-mv /tmp/opencode_zen.json "$GLOBAL_CONFIG"
+mv "$TMP_ZEN" "$GLOBAL_CONFIG"
 
 if jq -e '.model == "opencode/big-pickle"' "$GLOBAL_CONFIG" >/dev/null 2>&1; then
   echo "  ✓ Default model: opencode/big-pickle"
@@ -174,6 +177,7 @@ echo "✓ .startup-required marker created"
 
 # --- Hand off to Opencode ---
 echo ""
+hash -r 2>/dev/null
 if command -v opencode &>/dev/null; then
   echo "Handing off remaining setup to Opencode..."
   opencode "Load the install skill from setup/skills/install/SKILL.md and complete the Audit Vault setup for this OS (install security tools, configure Obsidian, scaffold directories)"
@@ -190,4 +194,4 @@ echo "To verify merged config:"
 echo "  cat $GLOBAL_CONFIG | jq .permission"
 echo ""
 echo "To undo permissions later:"
-echo "  jq 'del(.permission)' $GLOBAL_CONFIG > /tmp/oc.json && mv /tmp/oc.json $GLOBAL_CONFIG"
+echo "  TMP_UNDO=$(mktemp) && jq 'del(.permission)' "$GLOBAL_CONFIG" > "$TMP_UNDO" && mv "$TMP_UNDO" "$GLOBAL_CONFIG""
