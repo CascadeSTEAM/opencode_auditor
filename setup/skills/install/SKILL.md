@@ -1,3 +1,8 @@
+---
+name: vault-install
+description: Complete first-time Audit Vault setup — OS detection, security tool installation, Obsidian config, vault scaffold.
+---
+
 # Install Skill — Post-Clone Setup
 
 Load this skill when completing an Audit Vault first-time setup. Detect the target OS and handle each step accordingly.

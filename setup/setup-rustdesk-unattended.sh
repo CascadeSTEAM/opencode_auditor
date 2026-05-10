@@ -25,8 +25,14 @@ check_rustdesk() {
     return 1
 }
 
+PASSWORD_FILE=$(mktemp)
+chmod 600 "$PASSWORD_FILE"
+trap 'rm -f "$PASSWORD_FILE"' EXIT
+
 read -rsp "Enter permanent password for RustDesk: " PASSWORD
 echo
+echo "$PASSWORD" > "$PASSWORD_FILE"
+unset PASSWORD
 
 if ! check_rustdesk; then
     echo "RustDesk not found. Installing..."
@@ -54,7 +60,9 @@ if ! check_rustdesk; then
 fi
 
 echo "Setting permanent password..."
-sudo rustdesk --password "$PASSWORD"
+# Note: password still visible to other users via `ps` during execution
+# rustdesk does not support --password-stdin; track https://github.com/rustdesk/rustdesk for changes
+sudo rustdesk --password "$(cat "$PASSWORD_FILE")"
 
 mkdir -p "$CONFIG_DIR"
 
@@ -75,4 +83,3 @@ fi
 
 echo "RustDesk unattended access configured."
 echo "ID:       $(rustdesk --get-id 2>/dev/null || echo 'check RustDesk window')"
-echo "Password: $PASSWORD"

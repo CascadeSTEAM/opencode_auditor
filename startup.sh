@@ -15,9 +15,8 @@ for d in mitigations audits/completed audits metrics; do
   if [[ -d "$VAULT_DIR/$d" ]]; then
     echo "dir_$d: ok"
   else
-    echo "dir_$d: MISSING"
-    ALL_OK=false
-    MISSING=true
+    echo "dir_$d: MISSING — creating"
+    mkdir -p "$VAULT_DIR/$d"
   fi
 done
 

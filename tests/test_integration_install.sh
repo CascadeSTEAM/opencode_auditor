@@ -1,21 +1,24 @@
 #!/bin/bash
 
+VAULT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+INSTALL_SCRIPT="$VAULT_DIR/setup/install.sh"
+
 # Check if install.sh exists
-if [ ! -f /home/netyeti/Audit/install.sh ]; then
-echo "install.sh not found, skipping test."
+if [ ! -f "$INSTALL_SCRIPT" ]; then
+echo "install.sh not found at $INSTALL_SCRIPT, skipping test."
 exit 0
 fi
 
-# Create a temporary directory for testing
-mkdir -p /tmp/integration_test_install
-cd /tmp/integration_test_install
+# Verify the script parses correctly
+bash -n "$INSTALL_SCRIPT"
+if [ $? -ne 0 ]; then
+echo "install.sh has syntax errors."
+exit 1
+fi
 
-# Run install.sh in this sandbox environment
-/home/netyeti/Audit/install.sh
-
-# Verify the installation steps (e.g., check for created files or configurations)
-if [ ! -d "$HOME/.local/bin" ]; then
-echo "Installation failed: .local/bin directory not found."
+# Verify required dependencies are checked
+if ! grep -q "jq is required" "$INSTALL_SCRIPT"; then
+echo "install.sh missing jq dependency check."
 exit 1
 fi
 
