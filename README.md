@@ -62,7 +62,14 @@ bash bootstrap.sh
 ### After Install
 
 ```bash
-cd ~/opencode-auditor/audit-$(hostname) && opencode
+audit
+```
+
+The `audit` command checks for an existing vault for this machine, creates one if needed, and launches OpenCode. Available from any directory after running `setup/install.sh` (symlinked to `~/.local/bin/`).
+
+To audit a remote machine instead:
+```bash
+audit user@remote-host
 ```
 
 OpenCode reads AGENTS.md and walks you through the workflow conversationally. Just start with **"Audit my system"**.
@@ -70,9 +77,8 @@ OpenCode reads AGENTS.md and walks you through the workflow conversationally. Ju
 ### Examples
 
 ```bash
-# Start a full security audit in the vault
-cd ~/opencode-auditor/audit-$(hostname) && opencode
-# Then type: audit my system
+# Start a full security audit for this machine
+audit
 
 # Quick credential exposure check
 opencode -p "Scan ~ for exposed AWS keys, .env files, and secrets in git history"
@@ -91,14 +97,19 @@ Each session produces a dated plan file (`audits/plan_YYYYMMDD.md`) with per-fin
 
 ### Creating Named Vaults
 
-You can create multiple vaults for different machines or purposes:
+Create vaults for different machines or purposes:
 
 ```bash
-# Create additional vaults
+# Audit another machine (creates audit-<hostname> vault automatically)
+audit user@other-machine
+
+# Or create a vault with a custom name
 bash ~/opencode-auditor/repo/setup/new-vault.sh
 # Prompts for a name — defaults to audit-$(hostname)
 # Then: cd ~/opencode-auditor/NAME && opencode
 ```
+
+For individual audit sessions (auditing the same machine again next week), just run `audit` again — it detects the existing vault and asks to reuse it.
 
 Each vault is self-contained — its audit plans, mitigations, and metrics are independent.
 
@@ -126,6 +137,7 @@ bash ~/opencode-auditor/repo/setup/new-vault.sh
 ├── repo/                        # Toolkit (git clone)
 │   ├── AGENTS.md                # Template instructions (symlinked by vaults)
 │   ├── docs/                    # Workflow reference (symlinked by vaults)
+│   ├── audit                    # Launch/create vault from anywhere (symlinked to PATH)
 │   ├── bootstrap.sh             # Entry point — ensures opencode, clones, creates vault
 │   ├── opencode.json            # Template config example
 │   ├── setup/

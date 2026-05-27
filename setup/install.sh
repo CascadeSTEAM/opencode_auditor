@@ -139,9 +139,22 @@ for skill in templates tools; do
   echo "  ✓ Installed skill: $skill → $DST/SKILL.md"
 done
 
-# --- Done ---
+# --- Install audit command in PATH ---
+echo ""
+echo "Installing audit command to PATH ..."
+
+LOCAL_BIN="${HOME}/.local/bin"
+mkdir -p "$LOCAL_BIN"
+
+if [[ -f "$VAULT_DIR/audit" ]]; then
+  ln -snf "$VAULT_DIR/audit" "$LOCAL_BIN/audit"
+  echo "  ✓ Symlinked $VAULT_DIR/audit → $LOCAL_BIN/audit"
+else
+  warn "audit script not found at $VAULT_DIR/audit — skipping PATH install"
+fi
 
 # --- Done ---
+
 echo ""
 echo "=== Install complete ==="
 echo ""
