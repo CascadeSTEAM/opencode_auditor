@@ -1,16 +1,17 @@
 #!/usr/bin/env bash
-# Audit Vault — single-command install from github.com/CascadeSTEAM/opencode_auditor
+# Audit Vault — single-command bootstrap from github.com/CascadeSTEAM/opencode_auditor
 # Usage:
-#   curl -fsSL https://raw.githubusercontent.com/CascadeSTEAM/opencode_auditor/v0.7.7/bootstrap.sh | bash
-#   curl -fsSL https://raw.githubusercontent.com/CascadeSTEAM/opencode_auditor/v0.7.7/bootstrap.sh | bash -s -- --dry-run
+#   curl -fsSL https://raw.githubusercontent.com/CascadeSTEAM/opencode_auditor/main/bootstrap.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/CascadeSTEAM/opencode_auditor/main/bootstrap.sh | bash -s -- --dry-run
 #   INSTALL_DIR=/custom/path bash <(curl -fsSL ...)
-#   (Replace v0.7.7 with the latest tag; use main for development)
+#   (Pin to a specific tag instead of main for stable releases)
 
 set -euo pipefail
 
 REPO="CascadeSTEAM/opencode_auditor"
 BRANCH="main"
-INSTALL_DIR="${INSTALL_DIR:-$HOME/Projects/audit}"
+PARENT_DIR="${PARENT_DIR:-$HOME/opencode-auditor}"
+TOOLKIT_DIR="$PARENT_DIR/repo"
 GITHUB_RAW="https://raw.githubusercontent.com/$REPO/$BRANCH"
 
 # --- Flags ---
@@ -72,47 +73,61 @@ if ! command -v opencode &>/dev/null; then
   echo ""
 fi
 
-# --- Clone or pull ---
+# --- Ensure parent directory exists ---
+mkdir -p "$PARENT_DIR"
+
+# --- Clone or pull toolkit ---
 echo "=== Audit Vault — Install ==="
 echo ""
 
-if [[ -d "$INSTALL_DIR" ]]; then
-  if [[ -d "$INSTALL_DIR/.git" ]]; then
-    info "Vault exists at $INSTALL_DIR — pulling latest"
+if [[ -d "$TOOLKIT_DIR" ]]; then
+  if [[ -d "$TOOLKIT_DIR/.git" ]]; then
+    info "Toolkit exists at $TOOLKIT_DIR — pulling latest"
     if $DRY_RUN; then
-      echo "  Would run: git -C $INSTALL_DIR pull origin $BRANCH"
+      echo "  Would run: git -C $TOOLKIT_DIR pull origin $BRANCH"
     else
-      git -C "$INSTALL_DIR" pull origin "$BRANCH"
+      git -C "$TOOLKIT_DIR" pull origin "$BRANCH"
     fi
   else
-    fail "$INSTALL_DIR exists but is not a git repo."
-    echo "  Remove it or set INSTALL_DIR to a different path, then re-run."
+    fail "$TOOLKIT_DIR exists but is not a git repo."
+    echo "  Remove it or set PARENT_DIR to a different path, then re-run."
     exit 1
   fi
 else
-  info "Cloning vault to $INSTALL_DIR"
+  info "Cloning toolkit to $TOOLKIT_DIR"
   if $DRY_RUN; then
-    echo "  Would run: git clone --branch $BRANCH https://github.com/$REPO.git $INSTALL_DIR"
+    echo "  Would run: git clone --branch $BRANCH https://github.com/$REPO.git $TOOLKIT_DIR"
   else
-    git clone --branch "$BRANCH" "https://github.com/$REPO.git" "$INSTALL_DIR"
+    git clone --branch "$BRANCH" "https://github.com/$REPO.git" "$TOOLKIT_DIR"
   fi
 fi
 
-# --- Run vault installer ---
+# --- Global setup (permissions, skills, provider) ---
 echo ""
 if $DRY_RUN; then
-  echo "  Would run: bash $INSTALL_DIR/setup/install.sh"
+  echo "  Would run: bash $TOOLKIT_DIR/setup/install.sh"
 else
-  echo "Running vault installer..."
-  bash "$INSTALL_DIR/setup/install.sh"
+  echo "Running global setup..."
+  bash "$TOOLKIT_DIR/setup/install.sh"
+fi
+
+# --- Create or update a vault ---
+echo ""
+if $DRY_RUN; then
+  echo "  Would run: bash $TOOLKIT_DIR/setup/new-vault.sh"
+else
+  bash "$TOOLKIT_DIR/setup/new-vault.sh"
 fi
 
 # --- Done ---
 echo ""
 echo "========================================"
-echo "  Audit Vault scaffold complete!"
+echo "  Audit Vault setup complete!"
 echo "========================================"
 echo ""
-echo "  Installer will now finish setup via Opencode."
-echo "  Follow the prompts to install security tools and configure Obsidian."
+echo "  Your vault is ready. To start an audit:"
+echo "    cd $PARENT_DIR/<vault-name> && opencode"
+echo ""
+echo "  The toolkit is at:  $TOOLKIT_DIR"
+echo "  Update it anytime:  git -C $TOOLKIT_DIR pull"
 echo ""

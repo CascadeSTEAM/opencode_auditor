@@ -23,44 +23,55 @@ This vault provides a **conversational security audit framework** for Linux lapt
 - 30-day holding period for safe deletions
 - Risk assessment reporting
 
+## How It Works — Toolkit & Named Vaults
+
+The project is split into two parts:
+
+**Toolkit** (`repo/`) — Git-controlled template that provides the agent instructions, workflow docs, skills, and install scripts. This is the upstream source of truth.
+
+**Named vaults** (`audit-*/`) — Per-system private workspaces that hold your actual audit data. Each vault symlinks AGENTS.md and docs/ from the toolkit, keeping them always fresh. Your audit plans, mitigations, and metrics stay entirely local and private.
+
+This means:
+- `git pull` in the toolkit updates AGENTS.md and docs for **all** vaults instantly
+- Each machine/user gets their own vault — never shared, never tracked
+- Audit data is immune to upstream changes
+
 ## Quick Install
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/CascadeSTEAM/opencode_auditor/v0.7.7/bootstrap.sh | bash
+curl -fsSL https://raw.githubusercontent.com/CascadeSTEAM/opencode_auditor/main/bootstrap.sh | bash
 ```
 
-This clones the vault to `~/Projects/audit`, runs all setup (permissions, skills, Obsidian config), and optionally installs security tools.
+This creates `~/opencode-auditor/` with:
+- `repo/` — the toolkit (git clone, refreshed each run)
+- `audit-$(hostname)/` — your first vault (you choose the name)
+
+The bootstrap script installs OpenCode if needed, clones the toolkit, scaffolds a named vault, and configures global permissions.
 
 **Review before running:** Download and inspect first:
 ```bash
-curl -fsSL https://raw.githubusercontent.com/CascadeSTEAM/opencode_auditor/v0.7.7/bootstrap.sh -o bootstrap.sh
+curl -fsSL https://raw.githubusercontent.com/CascadeSTEAM/opencode_auditor/main/bootstrap.sh -o bootstrap.sh
 less bootstrap.sh
 bash bootstrap.sh
 ```
 
-**Custom install directory:** `INSTALL_DIR=/path/to/vault bash bootstrap.sh`
+**Pin to a specific version:** Replace `main` with any tag. See `docs/VERSIONING.md` for the versioning scheme.
 
 **Non-interactive:** `YES=1 bash bootstrap.sh`
 
-**Pin to a specific version:** Replace `v0.7.7` with any tag. See `docs/VERSIONING.md` for the versioning scheme. Use `main` for the development branch.
-
-After install: `cd ~/Projects/audit && opencode`
-
-### Manual Install
+### After Install
 
 ```bash
-git clone https://github.com/CascadeSTEAM/opencode_auditor.git ~/Projects/audit
-cd ~/Projects/audit
-bash setup/install.sh
+cd ~/opencode-auditor/audit-$(hostname) && opencode
 ```
 
-Then `opencode` from the vault directory. OpenCode reads `AGENTS.md` automatically and walks you through the workflow conversationally. Just start opencode and start with "Audit my system" - it's that easy.
+OpenCode reads AGENTS.md and walks you through the workflow conversationally. Just start with **"Audit my system"**.
 
 ### Examples
 
 ```bash
-# Start a full security audit
-cd ~/Projects/audit && opencode
+# Start a full security audit in the vault
+cd ~/opencode-auditor/audit-$(hostname) && opencode
 # Then type: audit my system
 
 # Quick credential exposure check
@@ -78,98 +89,67 @@ opencode -p "Walk me through mitigating the SSH root login finding"
 
 Each session produces a dated plan file (`audits/plan_YYYYMMDD.md`) with per-finding risk assessments mapped to SOC2 controls. Issues are resolved through interactive conversation: Mitigate, Accept, Transfer, Defer, or Skip, with discussion mode always available to ask questions before deciding.
 
+### Creating Named Vaults
+
+You can create multiple vaults for different machines or purposes:
+
+```bash
+# Create additional vaults
+bash ~/opencode-auditor/repo/setup/new-vault.sh
+# Prompts for a name — defaults to audit-$(hostname)
+# Then: cd ~/opencode-auditor/NAME && opencode
+```
+
+Each vault is self-contained — its audit plans, mitigations, and metrics are independent.
+
+### Updating the Toolkit
+
+```bash
+cd ~/opencode-auditor/repo && git pull
+```
+
+That's it. AGENTS.md and docs/ in all vaults are symlinked — they update immediately. The next time you run opencode in any vault, `startup.sh` checks for template config changes and offers to apply them.
+
+### Manual Install
+
+```bash
+mkdir -p ~/opencode-auditor
+git clone https://github.com/CascadeSTEAM/opencode_auditor.git ~/opencode-auditor/repo
+bash ~/opencode-auditor/repo/setup/install.sh
+bash ~/opencode-auditor/repo/setup/new-vault.sh
+```
+
 ## Directory Structure
 
 ```
-Audit/
-├── persistance/            # Persistent AI knowledge
-│   ├── skills/             # Teaching & communication skills
-│   └── docs_reports/       # OpenCode capability reference
-├── setup/                  # First-run setup files
-│   ├── INSTALL.md
-│   ├── install.sh
-│   ├── opencode.fragment.json
-│   ├── setup-rustdesk-unattended.sh
-│   ├── skills/
-│   │   ├── install/
-│   │   │   └── SKILL.md
-│   │   ├── templates/
-│   │   │   └── SKILL.md
-│   │   └── tools/
-│   │       └── SKILL.md
-│   └── .obsidian/          # Obsidian config templates
-├── tests/                  # Test suite
-│   ├── test_harness.sh
-│   ├── test_integration_bootstrap.sh
-│   ├── test_integration_install.sh
-│   ├── test_json_validation.sh
-│   ├── test_shell_install.sh
-│   └── test_shell_scripts.sh
-├── AGENTS.md              # Agent instructions (workflow, SOC2)
-├── README.md              # This file (setup & usage)
-├── opencode.json          # Vault-local OpenCode config
-├── startup.sh             # Startup health check
-├── bootstrap.sh           # Single-command install script
-├── audits/                # Active and completed audit plans
-│   └── completed/         # Archived finished audits
-├── mitigations/           # Individual task files (NN_topic.md)
-├── metrics/               # Security posture trends
-│   └── README.md
-└── docs/                  # Workflow reference files
-    ├── VERSIONING.md
-    ├── branching-strategy.md
-    ├── startup-menu.md
-    ├── resolution-workflow.md
-    ├── completion-workflow.md
-    ├── file-conventions.md
-    ├── soc2-controls.md
-    ├── continuous-monitoring.md
-    └── security-checklist.md
+~/opencode-auditor/
+├── repo/                        # Toolkit (git clone)
+│   ├── AGENTS.md                # Template instructions (symlinked by vaults)
+│   ├── docs/                    # Workflow reference (symlinked by vaults)
+│   ├── bootstrap.sh             # Entry point — ensures opencode, clones, creates vault
+│   ├── opencode.json            # Template config example
+│   ├── setup/
+│   │   ├── install.sh           # Global setup — permissions, skills, provider
+│   │   ├── new-vault.sh         # Scaffolds a named vault with symlinks
+│   │   ├── setup-rustdesk-unattended.sh
+│   │   └── skills/              # Skill definitions (templates, tools, install)
+│   ├── tests/                   # Test suite
+│   └── .github/                 # CI workflows
+│
+├── audit-zephyr/                # Named vault (default: audit-$(hostname))
+│   ├── AGENTS.md ──> ../repo/AGENTS.md    # Symlink — always fresh
+│   ├── docs/     ──> ../repo/docs/        # Symlink — always fresh
+│   ├── opencode.json                       # Local config (own copy)
+│   ├── startup.sh                          # Copied from toolkit
+│   ├── audits/                             # Local audit plans
+│   │   └── completed/
+│   ├── mitigations/                        # Local remediation logs
+│   ├── metrics/                            # Local scan metrics
+│   └── .obsidian/                          # Local Obsidian config
+│
+└── audit-personal/              # Another named vault
+    └── ...
 ```
-
-## Replication on Another System
-
-### Setup Steps
-
-1. **Copy vault** to new system (or use Obsidian Sync):
-   ```bash
-   cp -r /path/to/Audit ~/Projects/audit
-   ```
-
-2. **Run setup script** (installs OpenCode if missing, merges permissions):
-   ```bash
-   cd ~/Projects/audit
-   bash setup/install.sh
-   ```
-   - Checks for OpenCode and installs if missing (via `curl -fsSL https://opencode.ai/install | bash`)
-   - Merges permissions (`bash`, `edit`, `write` = "ask") to `~/.config/opencode/opencode.json`
-   - Copies skills to `~/.config/opencode/skills/`
-   - Creates vault directories if missing
-
- 3. **Launch OpenCode** (terminal-based AI agent):
-     ```bash
-     cd ~/Projects/audit
-     opencode
-    ```
-
-4. **Or open in Obsidian** — Open Obsidian, choose **"Open folder as vault"**, and select this directory. The `.obsidian/` config and opencode-obsidian plugin are installed by `install.sh`.
-
-5. **First run**: OpenCode reads `AGENTS.md` and walks through the workflow
-
-6. **Install security tools** (optional, for automation):
-   ```bash
-   # Detect OS
-   cat /etc/os-release | grep "^ID="
-   
-   # Ubuntu/Debian
-   sudo apt install lynis rkhunter fail2ban git-secrets
-   
-   # Fedora
-   sudo dnf install lynis rkhunter fail2ban firewalld
-   
-   # Arch
-   sudo pacman -S lynis rkhunter fail2ban firewalld
-   ```
 
 ## Resolution Options
 
@@ -217,8 +197,9 @@ Each audit item includes:
 
 **Q: OpenCode doesn't respond as expected?**
 - Check OpenCode is installed: `opencode --version`
-- Verify you're in the vault directory: `pwd` (should show the vault root, e.g. `~/Projects/audit`)
-- Ensure `AGENTS.md` exists in vault root
+- Verify you're in the vault directory: `pwd` (should show e.g. `~/opencode-auditor/audit-zephyr`)
+- Ensure `AGENTS.md` exists — it should be a symlink to `../repo/AGENTS.md`
+- Run `ls -la AGENTS.md` to verify
 
 **Q: Edit tool fails repeatedly?**
 - AGENTS.md has Process Fix: Use `write` tool after 2 failures
@@ -231,13 +212,15 @@ Each audit item includes:
 - Restart OpenCode — it will pick up AGENTS.md automatically
 
 **Q: Where are completed audits?**
-- Archived in `audits/completed/` directory
+- Archived in `audits/completed/` inside your vault
 
 **Q: Setup script fails?**
 - Ensure `jq` is installed: `sudo pacman -S jq` (Arch) or `sudo apt install jq` (Ubuntu)
-- Check `setup/install.sh` has execute permission: `chmod +x setup/install.sh`
+- Check toolkit is cloned correctly: `ls ~/opencode-auditor/repo`
+
+**Q: How do I update my vault after the toolkit has changes?**
+- `git -C ~/opencode-auditor/repo pull` — AGENTS.md and docs update automatically via symlinks
+- Next `startup.sh` run checks for template config changes and offers to apply them
 
 ---
-**Created**: 2026-05-05
-**Version**: 3.0 (Updated for OpenCode standalone + setup/ structure)
-**Setup**: See `setup/INSTALL.md` for detailed first-run instructions
+**Version**: 4.0 (Toolkit + named vaults — private per-system audit data, public template via git)

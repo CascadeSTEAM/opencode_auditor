@@ -69,21 +69,6 @@ jq --argjson perms '{
 mv "$TMP_MERGE" "$GLOBAL_CONFIG"
 echo "✓ Permissions merged"
 
-# --- Register vault AGENTS.md as instruction (relative path in vault-local opencode.json) ---
-echo ""
-echo "Registering vault AGENTS.md as instruction..."
-LOCAL_CONFIG="$VAULT_DIR/opencode.json"
-if [[ -f "$LOCAL_CONFIG" ]]; then
-  TMP_INSTRUCT=$(mktemp)
-  jq --arg agents "AGENTS.md" '
-    .instructions = (.instructions // [] | if index($agents) then . else . + [$agents] end)
-  ' "$LOCAL_CONFIG" > "$TMP_INSTRUCT" && \
-  mv "$TMP_INSTRUCT" "$LOCAL_CONFIG"
-  echo "  ✓ AGENTS.md registered in $LOCAL_CONFIG"
-else
-  echo "  SKIP — no opencode.json at vault root. Create one manually."
-fi
-
 # --- Setup OpenCode Zen provider with Big Pickle as default ---
 echo ""
 echo "Setting up OpenCode Zen provider (big-pickle default)..."
@@ -154,38 +139,7 @@ for skill in templates tools; do
   echo "  ✓ Installed skill: $skill → $DST/SKILL.md"
 done
 
-# --- Create vault scaffold ---
-echo ""
-echo "Creating vault scaffold in $VAULT_DIR ..."
-
-# Create directory structure (mitigations/ existence = install-complete marker)
-mkdir -p "$VAULT_DIR/audits/completed" "$VAULT_DIR/mitigations" "$VAULT_DIR/metrics"
-mkdir -p "$VAULT_DIR/docs"
-mkdir -p "$VAULT_DIR/.obsidian/plugins"
-
-echo "✓ audits/completed/ mitigations/ metrics/ created"
-echo "✓ docs/ created"
-
-# Copy startup.sh and make executable
-if [[ -f "$VAULT_DIR/startup.sh" ]]; then
-  chmod +x "$VAULT_DIR/startup.sh"
-  echo "✓ startup.sh made executable"
-fi
-
-# Create .startup-required marker
-touch "$VAULT_DIR/.startup-required"
-echo "✓ .startup-required marker created"
-
-# --- Hand off to Opencode ---
-echo ""
-hash -r 2>/dev/null
-if command -v opencode &>/dev/null; then
-  echo "Handing off remaining setup to Opencode..."
-  opencode "Load the install skill from setup/skills/install/SKILL.md and complete the Audit Vault setup for this OS (install security tools, configure Obsidian, scaffold directories)"
-else
-  echo "Opencode not found — skipping automated setup."
-  echo "Install Opencode and run: opencode"
-fi
+# --- Done ---
 
 # --- Done ---
 echo ""

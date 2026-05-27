@@ -16,7 +16,7 @@ if ! jq . "$CONFIG_FILE" > /dev/null; then
 fi
 
 # Verify expected key presence
-EXPECTED_KEYS="model provider permission instructions"
+EXPECTED_KEYS="model provider permission"
 
 for KEY in $EXPECTED_KEYS; do
   if ! jq -e ". | has(\"$KEY\")" "$CONFIG_FILE" > /dev/null; then
