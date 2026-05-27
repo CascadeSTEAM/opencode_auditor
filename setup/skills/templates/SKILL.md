@@ -1,3 +1,8 @@
+---
+name: vault-templates
+description: Audit plan and mitigation file format templates for audit_plan_YYYYMMDD.md and mitigations/NN_topic.md.
+---
+
 # Templates Skill — Audit Vault Document Formats
 
 Load this skill when creating or updating audit plan files (`audits/plan_*.md`) or mitigation task files (`mitigations/NN_topic.md`).

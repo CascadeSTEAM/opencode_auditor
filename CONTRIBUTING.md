@@ -23,7 +23,7 @@ gh issue create
 1. Open an issue first (unless it's a trivial fix) so we agree on the approach.
 2. Create a branch from `main` with a descriptive name:
    - `FIX/<issue-number>-<kebab-topic>` for bug fixes
-   - `FEAT/<issue-number>-<kebab-topic>` for features
+   - `F/<kebab-topic>` for features
    - `DOC/<kebab-topic>` for documentation
 3. Make your changes. Keep commits focused and present-tense.
 4. Open a PR against `main`. Reference the issue in the body.

@@ -82,27 +82,42 @@ Each session produces a dated plan file (`audits/plan_YYYYMMDD.md`) with per-fin
 
 ```
 Audit/
+├── persistance/            # Persistent AI knowledge
+│   ├── skills/             # Teaching & communication skills
+│   └── docs_reports/       # OpenCode capability reference
 ├── setup/                  # First-run setup files
 │   ├── INSTALL.md
 │   ├── install.sh
 │   ├── opencode.fragment.json
-│   └── skills/
-│       ├── templates/
-│       │   └── SKILL.md
-│       └── tools/
-│           └── SKILL.md
+│   ├── setup-rustdesk-unattended.sh
+│   ├── skills/
+│   │   ├── install/
+│   │   │   └── SKILL.md
+│   │   ├── templates/
+│   │   │   └── SKILL.md
+│   │   └── tools/
+│   │       └── SKILL.md
+│   └── .obsidian/          # Obsidian config templates
+├── tests/                  # Test suite
+│   ├── test_harness.sh
+│   ├── test_integration_bootstrap.sh
+│   ├── test_integration_install.sh
+│   ├── test_json_validation.sh
+│   ├── test_shell_install.sh
+│   └── test_shell_scripts.sh
 ├── AGENTS.md              # Agent instructions (workflow, SOC2)
 ├── README.md              # This file (setup & usage)
 ├── opencode.json          # Vault-local OpenCode config
 ├── startup.sh             # Startup health check
 ├── bootstrap.sh           # Single-command install script
 ├── audits/                # Active and completed audit plans
-│   └── completed/          # Archived finished audits
+│   └── completed/         # Archived finished audits
 ├── mitigations/           # Individual task files (NN_topic.md)
 ├── metrics/               # Security posture trends
 │   └── README.md
 └── docs/                  # Workflow reference files
     ├── VERSIONING.md
+    ├── branching-strategy.md
     ├── startup-menu.md
     ├── resolution-workflow.md
     ├── completion-workflow.md

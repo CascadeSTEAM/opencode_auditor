@@ -25,9 +25,9 @@ When a user enters custom text instead of picking a preset option:
 2. Provide relevant context (risk, impact, remediation effort, alternatives)
 3. Re-present the resolution options:
    ```
-   question([{ header: "Item #N — [PRIORITY] — Title", question: "Now how would you like to proceed?",
-     options: [
-    { label: "Mitigate",       description: "Create and execute a remediation plan" },
+    question([{ header: "Item #N — [PRIORITY] — Title", question: "Now how would you like to proceed?",
+      options: [
+        { label: "Mitigate",       description: "Create and execute a remediation plan" },
         { label: "Explain",        description: "Show the mitigation details — risk, plan, status" },
         { label: "Accept risk",    description: "Document why this risk is acceptable" },
         { label: "Transfer",       description: "Assign to another party or system" },
