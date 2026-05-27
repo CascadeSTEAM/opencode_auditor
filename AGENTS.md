@@ -1,5 +1,7 @@
 # AGENTS.md — Audit Vault
 
+This vault is a **named workspace** under `~/opencode-auditor/`. The toolkit at `../repo/` provides AGENTS.md, docs, and skills via symlinks. All audit output (plans, mitigations, metrics) stays in this vault — never pushed upstream.
+
 ## Starting an audit
 
 When the user asks about auditing their system, checking security, reviewing past results, or anything clearly related to operating the vault — including but not limited to "run an audit", "scan my system", "security check", "view dashboard", "resume last audit", "show me metrics":
@@ -66,3 +68,5 @@ When a bug or security issue is discovered in **core vault code** (tracked files
 | `docs/file-conventions.md` | File path purposes, tracking policy |
 | `docs/continuous-monitoring.md` | Weekly/monthly monitoring schedule |
 | `docs/branching-strategy.md` | PR workflow and branch naming for core code |
+| `docs/security-checklist.md` | Risk assessment framework and checklist items |
+| `docs/VERSIONING.md` | Versioning scheme, bump rules, release criteria |

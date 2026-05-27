@@ -6,6 +6,7 @@
 set -euo pipefail
 
 VAULT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+TOOLKIT_DIR="$(cd "$VAULT_DIR/../repo" && pwd 2>/dev/null || echo "")"
 MISSING=false
 
 # --- 1. Vault structure ---
@@ -53,6 +54,29 @@ if [[ -f "$VAULT_DIR/.startup-required" ]]; then
   echo "startup_required: yes"
 else
   echo "startup_required: no"
+fi
+
+# --- 5. Template change detection ---
+echo "=== TEMPLATE CHECK ==="
+if [[ -n "$TOOLKIT_DIR" && -f "$TOOLKIT_DIR/opencode.json" && -f "$VAULT_DIR/opencode.json" ]]; then
+  TEMPLATE_KEYS=$(jq -r 'paths(scalars) | join(".")' "$TOOLKIT_DIR/opencode.json" | sort)
+  VAULT_KEYS=$(jq -r 'paths(scalars) | join(".")' "$VAULT_DIR/opencode.json" | sort)
+  NEW_KEYS=$(comm -23 <(echo "$TEMPLATE_KEYS") <(echo "$VAULT_KEYS") || true)
+
+  if [[ -n "$NEW_KEYS" ]]; then
+    echo "template_update: new config keys available"
+    echo ""
+    echo "The template has new settings not in this vault:"
+    # shellcheck disable=SC2001
+    echo "$NEW_KEYS" | sed 's/^/  + /'
+    echo ""
+    echo "To apply: cp $TOOLKIT_DIR/opencode.json $VAULT_DIR/opencode.json"
+    echo "(Your existing settings will be lost. Merge manually if needed.)"
+  else
+    echo "template_update: none"
+  fi
+else
+  echo "template_update: skipped (toolkit not found)"
 fi
 
 # --- Exit ---
