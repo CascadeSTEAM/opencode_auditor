@@ -40,6 +40,31 @@ Load this skill when creating or updating audit plan files (`audits/plan_*.md`) 
 
 ## HIGH
 ...
+
+---
+
+## CVE / CERT Findings
+
+### AUDIT-YYYY-NNN — CVE Identifier (CVE-YYYY-NNNNN)
+- **Source:** cvescan | osv-scanner | debsecan | CISA KEV
+- **Package:** <package name>
+- **Fixed Version:** <version>
+- **Risk Assessment:**
+  - Likelihood: High | Medium | Low *(KEV entries default to High)*
+  - Impact: High | Medium | Low
+  - Risk Level: Critical | High | Medium | Low
+  - SOC2 Control: CC7.1
+  - CVSS: <score> (<vector>)
+- **CISA KEV:** Yes | No *(actively exploited in the wild)*
+- [ ] <action: upgrade package / apply mitigation / document acceptance>
+
+---
+
+## USN / Advisory Summary
+
+| USN ID | Title | Affected Packages | Priority |
+|--------|-------|-------------------|----------|
+| USN-YYYY-NNNN | <title> | <pkg1, pkg2> | Critical/High/Medium |
 ```
 
 ## Mitigation File Template (`mitigations/NN_topic.md`)
