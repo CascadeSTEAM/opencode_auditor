@@ -61,6 +61,7 @@ When a bug or security issue is discovered in **core vault code** (tracked files
 
 | File | Content |
 |---|---|
+| `docs/about.md` | Project purpose, background, key features |
 | `docs/startup-menu.md` | Menu definitions for the audit startup menu |
 | `docs/resolution-workflow.md` | Mitigate/Accept/Transfer/Defer/Skip flows |
 | `docs/completion-workflow.md` | Archive flow after all items resolved |

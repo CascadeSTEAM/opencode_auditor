@@ -1,5 +1,7 @@
 # Branching Strategy
 
+[About](about.md) · [Conventions](file-conventions.md) · [Startup](startup-menu.md) · [Resolution](resolution-workflow.md) · [Completion](completion-workflow.md) · [SOC2](soc2-controls.md) · [Checklist](security-checklist.md) · [Monitoring](continuous-monitoring.md) · [Branching](branching-strategy.md) · [Versioning](VERSIONING.md)
+
 **Adopted:** 2026-05-06 (pre-v1.0)
 **Goal:** Stabilize core code through PR-based collaboration before v1.0 release.
 

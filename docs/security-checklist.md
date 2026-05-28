@@ -1,5 +1,7 @@
 # Security Audit Checklist
 
+[About](about.md) · [Conventions](file-conventions.md) · [Startup](startup-menu.md) · [Resolution](resolution-workflow.md) · [Completion](completion-workflow.md) · [SOC2](soc2-controls.md) · [Checklist](security-checklist.md) · [Monitoring](continuous-monitoring.md) · [Branching](branching-strategy.md) · [Versioning](VERSIONING.md)
+
 **Purpose:** Quick-scan reference and finding generator for `audits/plan_YYYYMMDD.md`. Use this checklist to identify findings, then complete the Risk Assessment before any mitigation begins.
 
 **⚠️ Mandatory:** A Risk Assessment (Likelihood, Impact, Risk Level) must be completed for each finding before mitigation can start.
@@ -119,6 +121,22 @@ Iterate over plan items → create specific mitigation files in `mitigations/NN_
 
 ### Step 5: Execute Mitigations
 Follow the mitigation plan phases (read-only audit → action → verification) for each item.
+
+---
+
+## Security Tools Integration
+
+| Tool | Purpose | Risk |
+|------|---------|------|
+| lynis | System hardening audit | Low |
+| rkhunter | Rootkit detection | Low |
+| fail2ban | SSH intrusion prevention | Low |
+| firewalld | Dynamic firewall (already installed) | Low |
+| git-secrets | Prevent AWS cred commits | Low |
+| npm audit | Node.js dependency check | Low |
+| pip-audit | Python dependency check | Low |
+
+**Not recommended for laptop:** AIDE (too heavy), CIS benchmarks (breaks things), NIST CSF (org-level)
 
 ---
 
