@@ -1,5 +1,7 @@
 # Contributor Covenant Code of Conduct
 
+[About](docs/about.md) · [Conventions](docs/file-conventions.md) · [Startup](docs/startup-menu.md) · [Resolution](docs/resolution-workflow.md) · [Completion](docs/completion-workflow.md) · [SOC2](docs/soc2-controls.md) · [Checklist](docs/security-checklist.md) · [Monitoring](docs/continuous-monitoring.md) · [Branching](docs/branching-strategy.md) · [Versioning](docs/VERSIONING.md) · [CHANGELOG](CHANGELOG.md) · [CONTRIBUTING](CONTRIBUTING.md) · [SECURITY](SECURITY.md) · [CODE OF CONDUCT](CODE_OF_CONDUCT.md)
+
 ## Our Pledge
 
 We as members, contributors, and leaders pledge to make participation in our

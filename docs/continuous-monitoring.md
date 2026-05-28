@@ -1,5 +1,7 @@
 # Continuous Monitoring
 
+[About](about.md) · [Conventions](file-conventions.md) · [Startup](startup-menu.md) · [Resolution](resolution-workflow.md) · [Completion](completion-workflow.md) · [SOC2](soc2-controls.md) · [Checklist](security-checklist.md) · [Monitoring](continuous-monitoring.md) · [Branching](branching-strategy.md) · [Versioning](VERSIONING.md) · [CHANGELOG](../CHANGELOG.md) · [CONTRIBUTING](../CONTRIBUTING.md) · [SECURITY](../SECURITY.md) · [CODE OF CONDUCT](../CODE_OF_CONDUCT.md)
+
 - **Weekly:** lynis quick scan + rkhunter → update `metrics/security_posture_YYYYMM.json`
 - **Monthly:**
   - Full audit with comparison to prior month's metrics

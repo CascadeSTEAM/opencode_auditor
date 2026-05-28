@@ -1,5 +1,7 @@
 # Security Policy
 
+[About](docs/about.md) · [Conventions](docs/file-conventions.md) · [Startup](docs/startup-menu.md) · [Resolution](docs/resolution-workflow.md) · [Completion](docs/completion-workflow.md) · [SOC2](docs/soc2-controls.md) · [Checklist](docs/security-checklist.md) · [Monitoring](docs/continuous-monitoring.md) · [Branching](docs/branching-strategy.md) · [Versioning](docs/VERSIONING.md) · [CHANGELOG](CHANGELOG.md) · [CONTRIBUTING](CONTRIBUTING.md) · [SECURITY](SECURITY.md) · [CODE OF CONDUCT](CODE_OF_CONDUCT.md)
+
 ## Reporting a Vulnerability
 
 If you discover a security vulnerability in this project, please do **not** open a public issue.

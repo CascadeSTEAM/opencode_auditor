@@ -1,5 +1,7 @@
 # Versioning
 
+[About](about.md) · [Conventions](file-conventions.md) · [Startup](startup-menu.md) · [Resolution](resolution-workflow.md) · [Completion](completion-workflow.md) · [SOC2](soc2-controls.md) · [Checklist](security-checklist.md) · [Monitoring](continuous-monitoring.md) · [Branching](branching-strategy.md) · [Versioning](VERSIONING.md) · [CHANGELOG](../CHANGELOG.md) · [CONTRIBUTING](../CONTRIBUTING.md) · [SECURITY](../SECURITY.md) · [CODE OF CONDUCT](../CODE_OF_CONDUCT.md)
+
 This repo follows **Semantic Versioning 2.0.0**: `vMAJOR.MINOR.PATCH`.
 
 ## Bump Rules
@@ -41,4 +43,4 @@ Replace `v0.9.0` with the latest tag from the [releases page](https://github.com
 
 ## Changelog
 
-Git tags serve as the changelog. Each tag message describes the changes since the previous tag. Run `git log --oneline v0.1.0..v0.6.0` to review.
+Git tags serve as the changelog. Each tag message describes the changes since the previous tag. Run `git log --oneline v0.1.0..v0.9.0` to review.

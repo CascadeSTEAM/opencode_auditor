@@ -1,5 +1,7 @@
 # Startup Menu
 
+[About](about.md) · [Conventions](file-conventions.md) · [Startup](startup-menu.md) · [Resolution](resolution-workflow.md) · [Completion](completion-workflow.md) · [SOC2](soc2-controls.md) · [Checklist](security-checklist.md) · [Monitoring](continuous-monitoring.md) · [Branching](branching-strategy.md) · [Versioning](VERSIONING.md) · [CHANGELOG](../CHANGELOG.md) · [CONTRIBUTING](../CONTRIBUTING.md) · [SECURITY](../SECURITY.md) · [CODE OF CONDUCT](../CODE_OF_CONDUCT.md)
+
 Use the Question tool to present this menu when the user asks about auditing — after running `./startup.sh`.
 
 > **Passive scans:** All scans are read-only. Nothing is installed, modified, or removed until you specifically review and approve a remediation. See `setup/skills/tools/SKILL.md` for the exact commands run.
