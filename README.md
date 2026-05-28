@@ -95,6 +95,21 @@ opencode -p "Walk me through mitigating the SSH root login finding"
 
 Each session produces a dated plan file (`audits/plan_YYYYMMDD.md`) with per-finding risk assessments mapped to SOC2 controls. Issues are resolved through interactive conversation: Mitigate, Accept, Transfer, Defer, or Skip, with discussion mode always available to ask questions before deciding.
 
+### Viewing in Obsidian
+
+All vault data is plain markdown — you can browse audits, mitigations, and metrics in any editor. For a richer view, open the vault in [Obsidian](https://obsidian.md):
+
+1. Launch Obsidian
+2. Select **Open folder as vault** → pick your vault directory (e.g. `~/opencode-auditor/audit-$(hostname)`)
+3. The **opencode-obsidian** plugin is pre-configured — it adds a ribbon icon to launch OpenCode and a command palette entry
+
+You'll see three folders in the file explorer:
+- `audits/` — audit plan files (open items and completed)
+- `mitigations/` — per-finding remediation logs
+- `metrics/` — scan history for posture trending
+
+To view multiple vaults, use Obsidian's **Manage vaults** dialog to switch between them, or open separate Obsidian windows.
+
 ### Creating Named Vaults
 
 Create vaults for different machines or purposes:

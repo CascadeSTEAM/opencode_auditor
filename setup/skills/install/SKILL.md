@@ -36,6 +36,23 @@ brew install lynis
 # rkhunter and fail2ban have limited macOS support
 ```
 
+## 2.5 Install Obsidian (Optional)
+
+If the user plans to view audits in Obsidian (via `audit --both`), ask if they want to install it now.
+
+- **Ubuntu/Debian:** Download `.deb` from https://obsidian.md/download
+- **Fedora:** Download `.rpm` from https://obsidian.md/download
+- **Arch Linux:** Install from AUR (`yay -S obsidian`) or download AppImage from https://obsidian.md/download
+- **macOS:** `brew install --cask obsidian`
+- **Other:** Direct user to https://obsidian.md/download
+
+After the user installs, verify:
+```bash
+command -v obsidian && obsidian --version
+```
+
+Obsidian 1.12.4+ required for CLI features. Remind the user to enable **Settings → General → Command line interface → Register CLI** after first launch.
+
 ## 3. Configure Obsidian
 
 Create `.obsidian/` config files in the vault directory:
