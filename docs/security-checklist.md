@@ -53,6 +53,16 @@ Risk Assessment:
 | 9 | Weak password hashing | CC6.1 | `grep ENCRYPT_METHOD /etc/login.defs && grep -i "rounds\|sha512" /etc/pam.d/common-password /etc/pam.d/system-auth 2>/dev/null` |
 | 10 | Unnecessary services running | CC6.8 | `systemctl list-units --type=service --state=running \| head -20` |
 
+> **⚠️ GRUB Password Warning (Item 8):** Setting a GRUB password without recovery can permanently lock you out. If you choose to harden GRUB:
+> 1. **Skip on cloud VMs** — GRUB passwords provide no security on virtualized infrastructure. Check `systemd-detect-virt` first.
+> 2. **Use a short alphanumeric passphrase** — special chars and mixed case are easy to mistype at the GRUB prompt.
+> 3. **Save to `/root/`** (not an encrypted home directory) — or record on paper / in a password manager before applying.
+> 4. **Never rely on a single file copy** — display prominently and require confirmation.
+> 5. **Test before reboot** — `update-grub` validates syntax but cannot catch a mistyped password.
+> 6. **Recovery:** If locked out, boot a live USB, `chroot` into your system, and reset password via `grub-mkpasswd-pbkdf2` → edit `/etc/grub.d/40_custom` → `update-grub`.
+>
+> See the GRUB hardening mitigation template in `setup/skills/templates/SKILL.md` for the full safe workflow.
+
 ### MEDIUM
 
 | # | Item | SOC2 | Quick Command |

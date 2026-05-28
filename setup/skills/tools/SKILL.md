@@ -135,6 +135,53 @@ curl -s https://ubuntu.com/security/notices/rss.xml | \
 ```
 Shows the latest 15 Ubuntu Security Notices. Use to identify kernel and critical-service advisories affecting your release.
 
+### GRUB Bootloader Hardening
+
+> **⚠️ Lockout risk:** A mistyped or lost GRUB password bricks boot access. Read the full warning in `docs/security-checklist.md` and the safe workflow template in `setup/skills/templates/SKILL.md` before proceeding.
+
+#### Detection (Read-Only)
+```bash
+# Check if GRUB password is already set
+grep -r "set superusers\|password" /etc/grub.d/ /boot/grub/ 2>/dev/null
+
+# Check if this is a VM (skip GRUB hardening if so)
+systemd-detect-virt
+```
+
+#### Safe Password Generation
+```bash
+# Generate an alphanumeric passphrase (16 chars, easy to type)
+GRUB_PASS=$(tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 16)
+
+# Display and save to /root/ (outside encrypted home)
+echo "$GRUB_PASS" | sudo tee /root/.grub-password-$(hostname) > /dev/null
+sudo chmod 600 /root/.grub-password-$(hostname)
+```
+
+#### Apply Configuration
+```bash
+# 1. Generate PBKDF2 hash (interactive — enter the password twice)
+grub-mkpasswd-pbkdf2
+
+# 2. Edit /etc/grub.d/40_custom — add:
+#    set superusers="admin"
+#    password_pbkdf2 admin <paste-hash-here>
+
+# 3. Apply
+sudo update-grub
+```
+**Do NOT reboot** without first verifying the password file exists at `/root/.grub-password-$(hostname)` and you have it recorded in a second location.
+
+#### Password Recovery (If Locked Out)
+```bash
+# Boot from live USB, then:
+sudo mount /dev/sdXY /mnt
+sudo mount --bind /dev /mnt/dev && sudo mount --bind /proc /mnt/proc && sudo mount --bind /sys /mnt/sys
+sudo chroot /mnt
+sed -i '/set superusers\|password_pbkdf2/d' /etc/grub.d/40_custom
+update-grub
+```
+
 ### Additional Checks
 ```bash
 # Open ports
