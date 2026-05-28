@@ -74,6 +74,67 @@ sudo ausearch -k identity --start recent | tail -5
 ```
 **WARNING:** Default log rotation caps at 32MB (~1 day on active dev). Adjust `/etc/audit/auditd.conf`: `max_log_file=50`, `num_logs=4`, `space_left_action=SYSLOG`. Without this, auditd will stop logging or fill `/var`.
 
+### CVE & Vulnerability Scanning
+
+> These scans check installed packages and systems against known vulnerability databases. All are read-only. Findings may require package updates or mitigations, which will be presented for your review.
+
+#### cvescan — Canonical CVE Scanner (Primary)
+```bash
+# Install (Ubuntu)
+sudo snap install cvescan
+
+# Scan local system, JSON output
+sudo cvescan --json
+
+# Filter by priority
+sudo cvescan --priority critical --json
+```
+Exit code `3` = vulnerable CVEs found, `4` = vulnerable + patches available. Data sourced from the [Ubuntu CVE Tracker](https://people.canonical.com/~ubuntu-security/cve/).
+
+#### osv-scanner — Google OSV Database Scanner (Secondary)
+```bash
+# Install (binary download — no runtime deps)
+curl -sSfL https://github.com/google/osv-scanner/releases/latest/download/osv-scanner_linux_amd64 -o /tmp/osv-scanner
+chmod +x /tmp/osv-scanner
+sudo mv /tmp/osv-scanner /usr/local/bin/
+
+# Scan all installed dpkg packages
+osv-scanner --dpkg /var/lib/dpkg/status
+
+# Offline mode (cache DB locally first)
+osv-scanner --dpkg /var/lib/dpkg/status --offline
+```
+Scans against the [OSV.dev](https://osv.dev/) database — covers Ubuntu, Debian, Alpine, and language ecosystems.
+
+#### debsecan — Lightweight Fallback
+```bash
+# Install
+sudo apt install debsecan
+
+# Show all applicable CVEs
+debsecan
+
+# Show only fixed-but-unpatched CVEs
+debsecan --suite $(lsb_release -cs)
+```
+Installed via apt, zero setup. Checks the Debian Security Tracker for applicable CVEs.
+
+#### CISA KEV — Known Exploited Vulnerabilities
+```bash
+# Fetch the CISA KEV catalog and filter critical entries
+curl -s https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json | \
+  python3 -c "import sys,json; d=json.load(sys.stdin); [print(f\"{v['cveID']} — {v['shortDescription'][:120]} ({v['dateAdded']})\") for v in d['vulnerabilities']]"
+```
+Flags vulnerabilities that are **actively exploited in the wild**. Cross-reference with installed packages.
+
+#### Ubuntu USN — Advisory Feed
+```bash
+# Fetch recent Ubuntu Security Notices
+curl -s https://ubuntu.com/security/notices/rss.xml | \
+  python3 -c "import sys, xml.etree.ElementTree as ET; tree=ET.parse(sys.stdin); [print(i.find('title').text) for i in tree.findall('.//item')[:15]]"
+```
+Shows the latest 15 Ubuntu Security Notices. Use to identify kernel and critical-service advisories affecting your release.
+
 ### Additional Checks
 ```bash
 # Open ports
