@@ -2,6 +2,7 @@
 # audit — Launch or create an audit vault for a target host
 #   audit                  → local machine (audit-$(hostname))
 #   audit user@host        → remote host via SSH
+#   audit --both | -b      → run audit, then open results in Obsidian
 #   audit --list | -l      → list existing vaults with target info
 #   audit --help | -h      → show help
 #
@@ -25,11 +26,14 @@ ${BOLD}audit${NC} — Launch or create an audit vault for a target host
 ${BOLD}Usage:${NC}
   audit                        Audit this machine
   audit user@host              Audit a remote machine via SSH
+  audit --both | -b            Run audit, then open results in Obsidian
+  audit user@host -b           Audit remote host, then open in Obsidian
   audit --list                 List existing vaults
   audit --help                 Show this help
 
 ${BOLD}Examples:${NC}
   audit                         # audit this machine
+  audit --both                  # audit, then browse results in Obsidian
   audit server.example.com      # audit a remote server
   audit admin@10.0.1.5          # audit a remote server with user
 
@@ -70,23 +74,82 @@ list_vaults() {
   fi
 }
 
+find_obsidian() {
+  if command -v obsidian &>/dev/null; then
+    echo "obsidian"
+    return 0
+  fi
+  for p in /opt/Obsidian/obsidian /usr/bin/obsidian /usr/local/bin/obsidian "$HOME/.local/bin/obsidian"; do
+    [[ -x "$p" ]] && { echo "$p"; return 0; }
+  done
+  if command -v flatpak &>/dev/null && flatpak info md.obsidian.Obsidian &>/dev/null 2>&1; then
+    echo "flatpak"
+    return 0
+  fi
+  if [[ "$(uname)" == "Darwin" ]] && [[ -d "/Applications/Obsidian.app" ]]; then
+    echo "macos"
+    return 0
+  fi
+  return 1
+}
+
+generate_uuid() {
+  uuidgen 2>/dev/null || python3 -c "import uuid; print(uuid.uuid4())" 2>/dev/null || \
+    od -An -N16 -tx1 /dev/urandom | tr -d ' \n'
+}
+
+register_obsidian_vault() {
+  local vault_path="$1"
+  local obsidian_config="${XDG_CONFIG_HOME:-$HOME/.config}/obsidian/obsidian.json"
+
+  mkdir -p "$(dirname "$obsidian_config")"
+
+  if [[ -f "$obsidian_config" ]]; then
+    local exists
+    exists=$(jq --arg path "$vault_path" '.vaults | any(.path == $path)' "$obsidian_config")
+    if [[ "$exists" == "true" ]]; then
+      info "Vault already registered in Obsidian"
+      return 0
+    fi
+    local uuid
+    uuid=$(generate_uuid)
+    if ! jq --arg uuid "$uuid" --arg path "$vault_path" \
+      '.vaults[$uuid] = {"path": $path, "ts": (now | floor)}' \
+      "$obsidian_config" > "${obsidian_config}.tmp"; then
+      warn "Failed to register vault in Obsidian config"
+      rm -f "${obsidian_config}.tmp"
+      return 1
+    fi
+    mv "${obsidian_config}.tmp" "$obsidian_config"
+    info "Vault registered in Obsidian"
+  else
+    local uuid
+    uuid=$(generate_uuid)
+    if ! jq -n --arg uuid "$uuid" --arg path "$vault_path" \
+      '{ "vaults": { ($uuid): { "path": $path, "ts": (now | floor) } }, "cli": true }' \
+      > "$obsidian_config"; then
+      warn "Failed to create Obsidian config"
+      return 1
+    fi
+    info "Obsidian config created with vault entry"
+  fi
+}
+
 # --- Parse args ---
-case "${1:-}" in
-  --help|-h)
-    show_help
-    exit 0
-    ;;
-  --list|-l)
-    list_vaults
-    exit 0
-    ;;
-  "")
-    TARGET="localhost"
-    ;;
-  *)
-    TARGET="$1"
-    ;;
-esac
+BOTH_MODE=false
+TARGET=""
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --both|-b) BOTH_MODE=true; shift ;;
+    --help|-h) show_help; exit 0 ;;
+    --list|-l) list_vaults; exit 0 ;;
+    --*|-*) echo "Unknown flag: $1"; show_help; exit 1 ;;
+    *) if [[ -z "$TARGET" ]]; then TARGET="$1"; else echo "Unexpected argument: $1"; exit 1; fi; shift ;;
+  esac
+done
+
+TARGET="${TARGET:-localhost}"
 
 # --- Prerequisites ---
 if [[ ! -d "$TOOLKIT_DIR" ]]; then
@@ -207,5 +270,33 @@ fi
 
 # --- Launch ---
 echo ""
-echo "Launching OpenCode in ${BOLD}$VAULT_NAME${NC} ..."
-cd "$VAULT_DIR" && exec opencode
+if $BOTH_MODE; then
+  echo "Running audit in ${BOLD}$VAULT_NAME${NC}, then opening in Obsidian ..."
+  cd "$VAULT_DIR" && opencode
+  OPENCODE_EXIT=$?
+  if [[ $OPENCODE_EXIT -ne 0 ]]; then
+    warn "OpenCode exited with code $OPENCODE_EXIT — results may be incomplete"
+  fi
+
+  OBSIDIAN_CMD=$(find_obsidian) || {
+    echo ""
+    fail "Obsidian not found."
+    echo "  Install from: https://obsidian.md/download"
+    echo "  Then open your vault at: $VAULT_DIR"
+    exit 1
+  }
+
+  register_obsidian_vault "$VAULT_DIR" || true
+
+  echo ""
+  echo "Opening ${BOLD}$VAULT_NAME${NC} in Obsidian ..."
+  case "$OBSIDIAN_CMD" in
+    flatpak) flatpak run md.obsidian.Obsidian "obsidian://open?vault=$(basename "$VAULT_DIR")" & disown ;;
+    macos) open -a Obsidian "obsidian://open?vault=$(basename "$VAULT_DIR")" & disown ;;
+    *) "$OBSIDIAN_CMD" "obsidian://open?vault=$(basename "$VAULT_DIR")" & disown ;;
+  esac
+  info "Obsidian launched — use Open folder as vault → $VAULT_DIR if it doesn't open automatically"
+else
+  echo "Launching OpenCode in ${BOLD}$VAULT_NAME${NC} ..."
+  cd "$VAULT_DIR" && exec opencode
+fi
