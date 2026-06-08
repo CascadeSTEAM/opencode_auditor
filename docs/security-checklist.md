@@ -69,23 +69,24 @@ Risk Assessment:
 
 | # | Item | SOC2 | Quick Command |
 |---|------|------|---------------|
-| 11 | Shell history with secrets | CC6.1 | `grep -i "password\|secret\|key\|token" ~/.bash_history ~/.zsh_history 2>/dev/null \| head -10` |
-| 12 | Temp files with sensitive data | CC6.8 | `ls -la /tmp/ \| grep $(whoami) && find ~/.cache -type f -exec grep -l "password\|key" {} \; 2>/dev/null \| head -5` |
-| 13 | Core dumps enabled | CC6.8 | `ulimit -c && cat /proc/sys/kernel/core_pattern` |
-| 14 | No continuous monitoring | CC7.3 | `crontab -l 2>/dev/null \| grep -i "lynis\|rkhunter\|security"` |
-| 15 | No metrics tracking | CC7.3 | `ls -la ~/Projects/audit/metrics/*.json 2>/dev/null \|\| echo "No metrics files"` |
-| 16 | World-readable files | CC6.1 | `find ~ -perm -o=r -type f 2>/dev/null \| grep -v "\.git\|node_modules\|cache" \| head -10` |
+| 11 | Remote-access tools installed (RustDesk, AnyDesk, TeamViewer) | CC6.8 | `which rustdesk anydesk teamviewer 2>/dev/null; ls ~/.config/rustdesk/peers/ ~/.var/app/com.rustdesk.RustDesk/config/rustdesk/peers/ 2>/dev/null; ss -tlnp 2>/dev/null \| grep -iE "rustdesk\|anydesk\|teamviewer"` |
+| 12 | Shell history with secrets | CC6.1 | `grep -i "password\|secret\|key\|token" ~/.bash_history ~/.zsh_history 2>/dev/null \| head -10` |
+| 13 | Temp files with sensitive data | CC6.8 | `ls -la /tmp/ \| grep $(whoami) && find ~/.cache -type f -exec grep -l "password\|key" {} \; 2>/dev/null \| head -5` |
+| 14 | Core dumps enabled | CC6.8 | `ulimit -c && cat /proc/sys/kernel/core_pattern` |
+| 15 | No continuous monitoring | CC7.3 | `crontab -l 2>/dev/null \| grep -i "lynis\|rkhunter\|security"` |
+| 16 | No metrics tracking | CC7.3 | `ls -la ~/Projects/audit/metrics/*.json 2>/dev/null \|\| echo "No metrics files"` |
+| 17 | World-readable files | CC6.1 | `find ~ -perm -o=r -type f 2>/dev/null \| grep -v "\.git\|node_modules\|cache" \| head -10` |
 
 ### LOW
 
 | # | Item | SOC2 | Quick Command |
 |---|------|------|---------------|
-| 17 | Duplicate/backup directories | CC6.8 | `find ~ -type d \( -name "*backup*" -o -name "*old*" \) 2>/dev/null \| grep -v "\.git\|node_modules" \| head -10` |
-| 18 | Hidden files review | CC6.8 | `ls -la ~ \| grep "^-" \| grep "^\." \| head -20` |
-| 19 | LWP::UserAgent config | CC6.8 | `find ~ -name "*lwp*" 2>/dev/null && echo $PERL_LWP_SSL_VERIFY_HOSTNAME` |
-| 20 | Plaintext credential files | CC6.1 | `find ~ -type f \( -name "*password*" -o -name "*credential*" \) 2>/dev/null \| grep -v "\.git\|gpg\|kdbx" \| head -10` |
-| 21 | File permissions issues | CC6.1 | `find ~ -perm -o=w -type d 2>/dev/null \| head -5 && ls -ld ~` |
-| 22 | System artifacts cleanup | CC6.8 | `du -sh ~/.cache/* 2>/dev/null \| sort -h \| tail -10` |
+| 18 | Duplicate/backup directories | CC6.8 | `find ~ -type d \( -name "*backup*" -o -name "*old*" \) 2>/dev/null \| grep -v "\.git\|node_modules" \| head -10` |
+| 19 | Hidden files review | CC6.8 | `ls -la ~ \| grep "^-" \| grep "^\." \| head -20` |
+| 20 | LWP::UserAgent config | CC6.8 | `find ~ -name "*lwp*" 2>/dev/null && echo $PERL_LWP_SSL_VERIFY_HOSTNAME` |
+| 21 | Plaintext credential files | CC6.1 | `find ~ -type f \( -name "*password*" -o -name "*credential*" \) 2>/dev/null \| grep -v "\.git\|gpg\|kdbx" \| head -10` |
+| 22 | File permissions issues | CC6.1 | `find ~ -perm -o=w -type d 2>/dev/null \| head -5 && ls -ld ~` |
+| 23 | System artifacts cleanup | CC6.8 | `du -sh ~/.cache/* 2>/dev/null \| sort -h \| tail -10` |
 
 ---
 
